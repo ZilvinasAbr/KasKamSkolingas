@@ -6,6 +6,11 @@ import Layout from './components/Layout';
 import Login from './components/Login';
 import Register from './components/Register';
 import { Router, Route, hashHistory, IndexRoute } from 'react-router';
+import {createStore} from 'redux';
+import reducer from './reducer';
+
+const store = createStore(reducer);
+
 
 class App extends React.Component {
 	constructor(props) {
