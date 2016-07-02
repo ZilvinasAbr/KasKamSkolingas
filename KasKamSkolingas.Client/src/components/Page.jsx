@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Login from './Login';
+import { LoginContainer } from './Login';
 import Register from './Register';
 import Landing from './Landing';
 
@@ -16,7 +16,7 @@ export class Page extends React.Component {
       );
     }else if(this.props.currentPage === 'Login') {
       toRender = (
-        <Login />
+        <LoginContainer />
       );
     }else if(this.props.currentPage === 'Register') {
       toRender = (

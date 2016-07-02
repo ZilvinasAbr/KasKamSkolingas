@@ -1,7 +1,7 @@
 import {List, Map, fromJS} from 'immutable';
 import {expect} from 'chai';
 
-import reducer from '../src/reducer';
+import { reducer } from '../src/reducer';
 
 describe('reducer', () => {
 
@@ -17,10 +17,10 @@ describe('reducer', () => {
     }));
   });
   
-  it('handles LOGGGED_IN', () => {
+  it('handles LOGGED_IN', () => {
     const initialState = Map({
       isLoggedIn: false,
-      currentPage: 'Landing'
+      currentPage: 'Login'
     });
     const action = {
       type: 'LOGGED_IN'

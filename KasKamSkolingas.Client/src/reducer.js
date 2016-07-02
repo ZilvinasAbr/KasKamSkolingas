@@ -10,7 +10,10 @@ function setInitialState() {
 }
 
 function login(state) {
-  return state.set('isLoggedIn', true);
+  return state.merge({
+    'isLoggedIn': true,
+    'currentPage': 'Landing'
+  });
 }
 
 function logoff(state) {
