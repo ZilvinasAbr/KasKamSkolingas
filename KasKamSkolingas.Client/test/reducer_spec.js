@@ -36,7 +36,7 @@ describe('reducer', () => {
   it('handles LOGGED_OFF', () => {
     const initialState = Map({
       isLoggedIn: true,
-      currentPage: 'Landing'
+      currentPage: 'Login'
     });
     const action = {
       type: 'LOGGED_OFF'
@@ -95,6 +95,23 @@ describe('reducer', () => {
     const nextState = reducer(initialState, action);
 
     expect(nextState).to.equal(initialState);
+  });
+
+  it('handles SET_CURRENT_PAGE to CreateGroup', () => {
+    const initialState = Map({
+      isLoggedIn: true,
+      currentPage: 'Landing'
+    });
+    const action = {
+      type: 'SET_CURRENT_PAGE',
+      page: 'CreateGroup'
+    };
+    const nextState = reducer(initialState, action);
+
+    expect(nextState).to.equal(fromJS({
+      isLoggedIn: true,
+      currentPage: 'CreateGroup'
+    }));
   });
 
 });

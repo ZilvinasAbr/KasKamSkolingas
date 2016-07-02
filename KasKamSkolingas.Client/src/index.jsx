@@ -13,9 +13,6 @@ const store = createStore(reducer, initialState, compose(
   typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : (f) => f
 ))
 
-store.dispatch(setInitialState());
-
-
 class App extends React.Component {
 	constructor(props) {
 	  super(props);

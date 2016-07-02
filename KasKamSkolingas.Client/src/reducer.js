@@ -17,15 +17,20 @@ function login(state) {
 }
 
 function logoff(state) {
-  return state.set('isLoggedIn', false);
+  return state.merge({
+    'isLoggedIn': false,
+    'currentPage': 'Landing'
+  });
 }
 
 function setCurrentPage(state, page) {
-  if(!state.get('isLoggedIn')) {
-    return state.set('currentPage', page);
+  if(state.get('isLoggedIn') === true) {
+    if(page === 'Login' || page === 'Register') {
+      return state;
+    }
   }
-  
-  return state;
+
+  return state.set('currentPage', page);
 }
 
 export function reducer(state = initialState, action) {

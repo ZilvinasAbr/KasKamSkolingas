@@ -57,6 +57,7 @@ namespace KasKamSkolingas.Server
             services.AddMvc();
 
             // Add application services.
+            services.AddTransient<IApplicationService, ApplicationService>();
             //services.AddTransient<IEmailSender, AuthMessageSender>();
             //services.AddTransient<ISmsSender, AuthMessageSender>();
         }

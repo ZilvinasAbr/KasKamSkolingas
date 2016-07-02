@@ -53,13 +53,13 @@ export class Register extends React.Component {
     return (
       <div>
         <p>
-          Username: <input type="text" onChange={this.handleUsernameChange} />
+          Username: <input type="text" value={this.state.username} onChange={this.handleUsernameChange} />
         </p>
         <p>
-          Password: <input type="password" onChange={this.handlePasswordChange} />
+          Password: <input type="password" value={this.state.password} onChange={this.handlePasswordChange} />
         </p>
         <p>
-          Confirm password: <input type="password" onChange={this.handleConfirmChange} />
+          Confirm password: <input type="password" value={this.state.confirmPassword} onChange={this.handleConfirmChange} />
         </p>
         <p>
           <button onClick={this.handleSubmit}>Register</button>

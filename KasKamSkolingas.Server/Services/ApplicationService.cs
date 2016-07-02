@@ -31,6 +31,7 @@ namespace KasKamSkolingas.Server.Services
             group.Name = groupName;
 
             _dbContext.Groups.Add(group);
+            _dbContext.SaveChanges();
 
             return true;
         }

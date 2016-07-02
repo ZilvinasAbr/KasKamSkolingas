@@ -25,9 +25,16 @@ export class Tab extends React.Component {
   render() {
     let toRender;
     if(this.props.isLoggedIn === true){
-      toRender = (<div>
-                    <button onClick= { this.handleLogOff }>Log off</button>
-                  </div>);
+      toRender = (
+        <div>
+          <button onClick= {
+            e => {
+              this.props.dispatch(setCurrentPage('CreateGroup')) 
+            }
+          }>Create group</button>
+          <button onClick= { this.handleLogOff }>Log off</button>
+        </div>
+      );
     }else{
       toRender = (
         <div>

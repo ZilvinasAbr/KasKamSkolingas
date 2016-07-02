@@ -3,28 +3,23 @@ import { connect } from 'react-redux';
 import { LoginContainer } from './Login';
 import { RegisterContainer } from './Register';
 import Landing from './Landing';
+import CreateGroup from './CreateGroup';
 
 export class Page extends React.Component {
   render() {
-    let toRender = (
-      <div>Error</div>
-    );
 
-    if(this.props.currentPage === 'Landing') {
-      toRender = (
-        <Landing />
-      );
-    }else if(this.props.currentPage === 'Login') {
-      toRender = (
-        <LoginContainer />
-      );
-    }else if(this.props.currentPage === 'Register') {
-      toRender = (
-        <RegisterContainer />
-      );
+    switch(this.props.currentPage) {
+      case 'Landing':
+        return (<Landing />);
+      case 'Login':
+        return (<LoginContainer />);
+      case 'Register':
+        return (<RegisterContainer />);
+      case 'CreateGroup':
+        return (<CreateGroup />);
+      default:
+        return (<div>Error</div>);
     }
-
-    return toRender;
   }
 }
 
