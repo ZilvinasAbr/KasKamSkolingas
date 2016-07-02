@@ -1,10 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import Axios from 'axios';
-import Landing from './components/Landing';
-import Layout from './components/Layout';
-import Login from './components/Login';
-import Register from './components/Register';
 import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 import { createStore, compose } from 'redux';
 import { Provider } from 'react-redux';
@@ -13,7 +9,6 @@ import { TabContainer } from './components/Tab';
 import { PageContainer } from './components/Page';
 import { setInitialState } from './action_creators';
 
-//const store = createStore(reducer);
 const store = createStore(reducer, initialState, compose(
   typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : (f) => f
 ))

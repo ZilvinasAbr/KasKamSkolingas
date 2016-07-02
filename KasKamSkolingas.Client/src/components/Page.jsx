@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { LoginContainer } from './Login';
-import Register from './Register';
+import { RegisterContainer } from './Register';
 import Landing from './Landing';
 
 export class Page extends React.Component {
@@ -20,7 +20,7 @@ export class Page extends React.Component {
       );
     }else if(this.props.currentPage === 'Register') {
       toRender = (
-        <Register />
+        <RegisterContainer />
       );
     }
 
