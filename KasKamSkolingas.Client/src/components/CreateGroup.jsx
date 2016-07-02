@@ -1,12 +1,15 @@
 import React from 'react';
+import axios from 'axios';
+import { setCurrentPage } from '../action_creators';
+import { connect } from 'react-redux';
 
 export class CreateGroup extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      groupName: '',
-    }
+      groupName: ''
+    };
 
     this.handleGroupNameChange = this.handleGroupNameChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,7 +20,15 @@ export class CreateGroup extends React.Component {
   }
 
   handleSubmit() {
-    
+    axios.post('api/group/create', { GroupName: this.state.groupName })
+      .then((response) => {
+        if(response.data === true) {
+          this.props.dispatch(setCurrentPage('Landing'));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -33,3 +44,5 @@ export class CreateGroup extends React.Component {
     );
   }
 }
+
+export const CreateGroupContainer = connect()(CreateGroup);
