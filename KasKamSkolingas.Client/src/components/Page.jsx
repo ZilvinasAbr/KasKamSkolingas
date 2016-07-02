@@ -1,5 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Login from './components/Login';
+import Register from './components/Register';
+import Landing from './components/Landing';
 
 export class Page extends React.Component {
   render() {
@@ -9,39 +12,16 @@ export class Page extends React.Component {
 
     if(this.props.currentPage === 'Landing') {
       toRender = (
-        <div>Landing page</div>
+        <Landing />
       );
     }else if(this.props.currentPage === 'Login') {
       toRender = (
-        <div>
-          <p>
-            Username: <input type="text" />
-          </p>
-          <p>
-            Password: <input type="password" />
-          </p>
-          <p>
-            <button>Login</button>
-          </p>
-        </div>
+        <Login />
       );
     }else if(this.props.currentPage === 'Register') {
       toRender = (
-              <div>
-                <p>
-                    Username: <input type="text" />
-                </p>
-                <p>
-                    Password: <input type="password" />
-                </p>
-                <p>
-                    Confirm Password: <input type="password" />
-                </p>
-                <p>
-                    <button>Register</button>
-                </p>
-              </div>
-        );
+        <Register />
+      );
     }
 
     return toRender;
