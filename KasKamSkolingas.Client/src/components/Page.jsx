@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Login from './components/Login';
-import Register from './components/Register';
-import Landing from './components/Landing';
+import Login from './Login';
+import Register from './Register';
+import Landing from './Landing';
 
 export class Page extends React.Component {
   render() {
