@@ -11,11 +11,12 @@ namespace KasKamSkolingas.Server.Models
         public Group()
         {
             Debts = new Collection<Debt>();
-            Users = new Collection<ApplicationUser>();
+            ApplicationUserGroups = new List<ApplicationUserGroup>();
         }
 
         public ICollection<Debt> Debts { get; set; }
-        public ICollection<ApplicationUser> Users { get; set; }
+
+        public IList<ApplicationUserGroup> ApplicationUserGroups { get; set; }
 
         public long Id { get; set; }
         public string Name { get; set; }

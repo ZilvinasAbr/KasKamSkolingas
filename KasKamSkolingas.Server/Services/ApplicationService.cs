@@ -26,11 +26,19 @@ namespace KasKamSkolingas.Server.Services
                 return false;
             }
 
-            Group group = new Group();
-            group.Users.Add(user);
-            group.Name = groupName;
+            Group group = new Group()
+            {
+                Name = groupName
+            };
 
-            _dbContext.Groups.Add(group);
+            ApplicationUserGroup applicationUserGroup = new ApplicationUserGroup()
+            {
+                ApplicationUser = user,
+                Group = group
+            };
+
+            _dbContext.ApplicationUserGroups
+                .Add(applicationUserGroup);
             _dbContext.SaveChanges();
 
             return true;
