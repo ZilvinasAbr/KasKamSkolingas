@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { loggedIn } from '../action_creators';
+import { fetchUserData } from '../actions';
 
 export class Register extends React.Component {
   constructor(props) {
@@ -40,6 +41,7 @@ export class Register extends React.Component {
     .then((response) => {
       if(response.data === true) {
         this.props.dispatch(loggedIn());
+        fetchUserData(this.props.dispatch);
       }else {
         console.log('Could not register');
       }

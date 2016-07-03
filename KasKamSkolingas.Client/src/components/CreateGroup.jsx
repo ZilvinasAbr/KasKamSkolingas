@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { setCurrentPage } from '../action_creators';
 import { connect } from 'react-redux';
+import { fetchUserData } from '../actions';
 
 export class CreateGroup extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export class CreateGroup extends React.Component {
     axios.post('api/group/create', { GroupName: this.state.groupName })
       .then((response) => {
         if(response.data === true) {
+          fetchUserData(this.props.dispatch);
           this.props.dispatch(setCurrentPage('Landing'));
         }
       })

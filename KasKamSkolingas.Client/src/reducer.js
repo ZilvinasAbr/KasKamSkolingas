@@ -1,4 +1,4 @@
-import {Map} from 'immutable';
+import {Map, fromJS} from 'immutable';
 
 export const initialState = Map({
   isLoggedIn: false,
@@ -33,6 +33,10 @@ function setCurrentPage(state, page) {
   return state.set('currentPage', page);
 }
 
+function receiveUserData(state, data) {
+  return state.set('userData', fromJS(data));
+}
+
 export function reducer(state = initialState, action) {
   switch(action.type) {
     case 'SET_INITIAL_STATE':
@@ -43,6 +47,8 @@ export function reducer(state = initialState, action) {
       return logoff(state);
     case 'SET_CURRENT_PAGE':
       return setCurrentPage(state, action.page);
+    case 'RECEIVE_USER_DATA':
+      return receiveUserData(state, action.data);
   }
   
   return state;

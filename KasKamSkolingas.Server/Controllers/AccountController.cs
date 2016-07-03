@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using KasKamSkolingas.Server.Models;
 using KasKamSkolingas.Server.Models.ViewModels;
+using KasKamSkolingas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +17,16 @@ namespace KasKamSkolingas.Server.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IApplicationService _applicationService;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IApplicationService applicationService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _applicationService = applicationService;
         }
 
         [HttpPost("register")]
@@ -83,6 +87,21 @@ namespace KasKamSkolingas.Server.Controllers
             }
 
             return false;
+        }
+
+        [HttpGet("getuserdata")]
+        public object GetUserData()
+        {
+            var userId = HttpContext.User.GetUserId();
+
+            if (userId == null)
+            {
+                return null;
+            }
+
+            var result = _applicationService.GetUserData(userId);
+
+            return result;
         }
 
     }

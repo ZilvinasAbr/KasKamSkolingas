@@ -43,5 +43,22 @@ namespace KasKamSkolingas.Server.Services
 
             return true;
         }
+
+        public IEnumerable<string> GetUserGroups(string userId)
+        {
+            var groupNames = _dbContext
+                .ApplicationUserGroups
+                .Where(ag => ag.ApplicationUserId == userId)
+                .Select(ag => ag.Group.Name);
+
+            return groupNames;
+        }
+
+        public object GetUserData(string userId)
+        {
+            var groupNames = GetUserGroups(userId);
+
+            return new {groups = groupNames};
+        }
     }
 }

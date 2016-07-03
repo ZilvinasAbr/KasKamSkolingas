@@ -32,6 +32,11 @@ export class Tab extends React.Component {
               this.props.dispatch(setCurrentPage('CreateGroup')) 
             }
           }>Create group</button>
+          <button onClick= {
+            e => {
+              this.props.dispatch(setCurrentPage('Groups')) 
+            }
+          }>Groups</button>
           <button onClick= { this.handleLogOff }>Log off</button>
         </div>
       );

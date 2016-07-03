@@ -8,5 +8,7 @@ namespace KasKamSkolingas.Server.Services
     public interface IApplicationService
     {
         bool CreateGroup(string userId, string groupName);
+        IEnumerable<string> GetUserGroups(string userId);
+        object GetUserData(string userId);
     }
 }

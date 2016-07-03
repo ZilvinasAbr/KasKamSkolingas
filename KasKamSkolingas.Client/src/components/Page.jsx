@@ -4,6 +4,7 @@ import { LoginContainer } from './Login';
 import { RegisterContainer } from './Register';
 import Landing from './Landing';
 import { CreateGroupContainer } from './CreateGroup';
+import { GroupsContainer } from './Groups';
 
 export class Page extends React.Component {
   render() {
@@ -21,6 +22,8 @@ export class Page extends React.Component {
         return (<RegisterContainer />);
       case 'CreateGroup':
         return (<CreateGroupContainer />);
+      case 'Groups':
+        return (<GroupsContainer />);
       default:
         return (<div>Error</div>);
     }
