@@ -203,7 +203,8 @@ namespace KasKamSkolingas.Server.Services
                     userTo = debt.To.UserName,
                     group = debt.Group.Name,
                     amount = debt.Amount,
-                    whatFor = debt.Description
+                    whatFor = debt.Description,
+                    isUserInDebt = (debt.From.Id == userId)
                 };
 
                 result.Add(newDebt);

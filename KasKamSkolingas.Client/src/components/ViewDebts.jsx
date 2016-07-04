@@ -10,6 +10,8 @@ export class ViewDebts extends React.Component {
 		this.state = {
 			debts: []
 		};
+
+		this.renderDebt = this.renderDebt.bind(this);
 	}
 
 	componentDidMount() {
@@ -25,23 +27,35 @@ export class ViewDebts extends React.Component {
 			})
 	}
 
+	renderDebt(debt, index) {
+		let date = new Date(debt.dateCreated);
+		return (
+  		<tr key={index} id={index}>
+  			<td>{date.toLocaleString()}</td>
+  			<td>{debt.userFrom}</td>
+  			<td>{debt.userTo}</td>
+  			<td>{debt.group}</td>
+  			<td>{debt.whatFor}</td>
+  			<td>{debt.amount}</td>
+  			<td>
+  				{(debt.isUserInDebt ? (
+  					<button>Pay debt</button>
+  				):(
+  					<div>
+  						<button>End debt</button>
+  						<button>Delete debt</button>
+  					</div>
+  				))}
+  			</td>
+  		</tr>
+  	);
+	}
+
   render() {
 
-  	let debts = this.state.debts.map((debt, index) => {
-  		let date = new Date(debt.dateCreated);
-  		//let dateTime = new Date(date.getFullYear(), date.getMonth(), date.getDay(),
-  		//	date.getHours(), date.getMinutes());
-  		return (
-  			<tr key={index} id={index}>
-  				<td>{date.toLocaleString()}</td>
-  				<td>{debt.userFrom}</td>
-  				<td>{debt.userTo}</td>
-  				<td>{debt.group}</td>
-  				<td>{debt.whatFor}</td>
-  				<td>{debt.amount}</td>
-  			</tr>
-  		);
-  	});
+  	let debts = this.state.debts.map((debt, index) => (
+  		this.renderDebt(debt, index)
+  	));
 
     return (
       <div>
@@ -54,6 +68,7 @@ export class ViewDebts extends React.Component {
 			        <th>Group</th>
 			        <th>What for</th>
 			        <th>Amount</th>
+			        <th>Actions</th>
 			      </tr>
 			    </thead>
 			    <tbody>
