@@ -22,3 +22,17 @@ export function setCurrentPage(page) {
     page: page
   }
 }
+
+export function receiveUserData(json) {
+  return {
+    type: 'RECEIVE_USER_DATA',
+    data: json
+  }
+};
+
+export function receiveGroupData(json) {
+  return {
+    type: 'RECEIVE_GROUP_DATA',
+    payload: json
+  }
+}

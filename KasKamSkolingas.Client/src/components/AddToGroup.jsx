@@ -29,7 +29,7 @@ export class AddToGroup extends React.Component {
 
 	onSubmit() {
 		axios.post('api/group/addtogroup', {
-			Group: this.state.group,
+			GroupName: this.state.group,
 			Username: this.state.user
 		})
 		.then((response) => {
@@ -47,7 +47,7 @@ export class AddToGroup extends React.Component {
   render() {
     return (
       <div>
-      	AddToGroup
+      	Add to group
       	<div>
       		Group:
       		<select onChange={this.onGroupChange}>

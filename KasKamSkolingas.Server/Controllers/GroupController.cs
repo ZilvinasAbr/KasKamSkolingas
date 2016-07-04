@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using KasKamSkolingas.Server.Models;
 using KasKamSkolingas.Server.Models.ViewModels;
 using KasKamSkolingas.Server.Services;
@@ -54,6 +50,21 @@ namespace KasKamSkolingas.Server.Controllers
             }
 
             return false;
+        }
+
+        [HttpPost("getgroupdata")]
+        public object GetGroupData([FromBody] GetGroupDataViewModel model)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = User.GetUserId();
+                var result = _applicationService.GetGroupData(userId, model.GroupName);
+
+                return result;
+            }
+
+            return null;
+
         }
     }
 }

@@ -105,5 +105,72 @@ namespace KasKamSkolingas.Server.Services
             _dbContext.SaveChanges();
             return true;
         }
+
+        public object GetGroupData(string userId, string groupName)
+        {
+            var user = _dbContext.ApplicationUsers
+                .SingleOrDefault(a => a.Id == userId);
+            var group = _dbContext.Groups
+                .SingleOrDefault(g => g.Name == groupName);
+
+            if (user == null || group == null)
+            {
+                return null;
+            }
+
+            var applicationUserGroup = _dbContext.ApplicationUserGroups
+                .SingleOrDefault(ag => ag.ApplicationUserId == user.Id &&
+                ag.GroupId == group.Id);
+
+            if (applicationUserGroup == null)
+            {
+                return null;
+            }
+
+            var users = _dbContext.ApplicationUserGroups
+                .Where(ag => ag.GroupId == group.Id)
+                .Select(ag => ag.ApplicationUser.UserName);
+
+            return new { users};
+        }
+
+        public bool CreateDebt(string groupName, string usernameFrom, string userIdTo, decimal amount, string whatFor)
+        {
+            var group = _dbContext.Groups
+                .SingleOrDefault(g => g.Name == groupName);
+            var userFrom = _dbContext.ApplicationUsers
+                .SingleOrDefault(u => u.UserName == usernameFrom);
+            var userTo = _dbContext.ApplicationUsers
+                .SingleOrDefault(u => u.Id == userIdTo);
+
+            if (group == null || userFrom == null || userTo == null)
+            {
+                return false;
+            }
+
+            var applicationUserGroups = _dbContext.ApplicationUserGroups
+                .Where(ag => ag.GroupId == group.Id)
+                .Where(ag => ag.ApplicationUserId == userFrom.Id || ag.ApplicationUserId == userTo.Id);
+
+            // Looks if both users belong to the group. This if clause also checks if both users are not the same user
+            if (applicationUserGroups.Count() < 2)
+            {
+                return false;
+            }
+
+            Debt newDebt = new Debt()
+            {
+                Amount = amount,
+                Description = whatFor,
+                From = userFrom,
+                Group = group,
+                To = userTo
+            };
+
+            _dbContext.Debts.Add(newDebt);
+            _dbContext.SaveChanges();
+
+            return true;
+        }
     }
 }

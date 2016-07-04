@@ -170,4 +170,26 @@ describe('reducer', () => {
     }));
   });
 
+  it('handles RECEIVE_GROUP_DATA', () => {
+    const initialState = Map({
+      isLoggedIn: true,
+      currentPage: 'CreateDebt'
+    });
+    const action = {
+      type: 'RECEIVE_GROUP_DATA',
+      payload: {
+        users: ['User1', 'User2', 'User3']
+      }
+    };
+    const nextState = reducer(initialState, action);
+
+    expect(nextState).to.equal(fromJS({
+      isLoggedIn: true,
+      currentPage: 'CreateDebt',
+      groupData: {
+        users: ['User1', 'User2', 'User3']
+      }
+    }));
+  });
+
 });

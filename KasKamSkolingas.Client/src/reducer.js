@@ -37,6 +37,10 @@ function receiveUserData(state, data) {
   return state.set('userData', fromJS(data));
 }
 
+function receiveGroupData(state, groupData) {
+  return state.set('groupData', fromJS(groupData));
+}
+
 export function reducer(state = initialState, action) {
   switch(action.type) {
     case 'SET_INITIAL_STATE':
@@ -49,7 +53,9 @@ export function reducer(state = initialState, action) {
       return setCurrentPage(state, action.page);
     case 'RECEIVE_USER_DATA':
       return receiveUserData(state, action.data);
+    case 'RECEIVE_GROUP_DATA':
+      return receiveGroupData(state, action.payload);
+    default:
+      return state;
   }
-  
-  return state;
 }
