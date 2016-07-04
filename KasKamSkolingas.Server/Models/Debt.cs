@@ -8,6 +8,8 @@ namespace KasKamSkolingas.Server.Models
     public class Debt
     {
         public long Id { get; set; }
+
+        public DateTime DateCreated { get; set; }
         public decimal Amount { get; set; }
         public string Description { get; set; }
 

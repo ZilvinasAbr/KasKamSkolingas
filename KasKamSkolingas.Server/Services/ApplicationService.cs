@@ -135,7 +135,7 @@ namespace KasKamSkolingas.Server.Services
             return new { users};
         }
 
-        public bool CreateDebt(string groupName, string usernameFrom, string userIdTo, decimal amount, string whatFor)
+        public bool CreateDebt(DateTime dateCreated, string groupName, string usernameFrom, string userIdTo, decimal amount, string whatFor)
         {
             var group = _dbContext.Groups
                 .SingleOrDefault(g => g.Name == groupName);
@@ -161,6 +161,7 @@ namespace KasKamSkolingas.Server.Services
 
             Debt newDebt = new Debt()
             {
+                DateCreated = dateCreated,
                 Amount = amount,
                 Description = whatFor,
                 From = userFrom,
@@ -196,6 +197,8 @@ namespace KasKamSkolingas.Server.Services
             {
                 var newDebt = new
                 {
+                    id = debt.Id,
+                    dateCreated = debt.DateCreated,
                     userFrom = debt.From.UserName,
                     userTo = debt.To.UserName,
                     group = debt.Group.Name,

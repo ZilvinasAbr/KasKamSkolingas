@@ -28,8 +28,12 @@ export class ViewDebts extends React.Component {
   render() {
 
   	let debts = this.state.debts.map((debt, index) => {
+  		let date = new Date(debt.dateCreated);
+  		//let dateTime = new Date(date.getFullYear(), date.getMonth(), date.getDay(),
+  		//	date.getHours(), date.getMinutes());
   		return (
   			<tr key={index} id={index}>
+  				<td>{date.toLocaleString()}</td>
   				<td>{debt.userFrom}</td>
   				<td>{debt.userTo}</td>
   				<td>{debt.group}</td>
@@ -44,6 +48,7 @@ export class ViewDebts extends React.Component {
       	<table class="table">
 			    <thead>
 			      <tr>
+			      	<th>Date created</th>
 			        <th>In debt</th>
 			        <th>Debt to</th>
 			        <th>Group</th>

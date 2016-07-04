@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using KasKamSkolingas.Server.Models;
 using KasKamSkolingas.Server.Models.ViewModels;
 using KasKamSkolingas.Server.Services;
@@ -31,7 +32,7 @@ namespace KasKamSkolingas.Server.Controllers
                 var userIdTo = HttpContext.User.GetUserId();
 
                 var result = _applicationService
-                    .CreateDebt(model.GroupName, model.UsernameFrom,
+                    .CreateDebt(DateTime.Now, model.GroupName, model.UsernameFrom,
                         userIdTo, model.Amount, model.WhatFor);
 
                 return result;

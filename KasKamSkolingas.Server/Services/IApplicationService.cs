@@ -13,7 +13,7 @@ namespace KasKamSkolingas.Server.Services
         IEnumerable<string> FindUsernames(string searchTerm);
         bool AddUserToGroup(string userId, string groupName, string usernameToAdd);
         object GetGroupData(string userId, string groupName);
-        bool CreateDebt(string groupName, string usernameFrom, string userIdTo, decimal amount, string whatFor);
+        bool CreateDebt(DateTime dateCreated, string groupName, string usernameFrom, string userIdTo, decimal amount, string whatFor);
         object GetUserDebts(string userId);
     }
 }
