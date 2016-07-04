@@ -7,6 +7,7 @@ import { CreateGroupContainer } from './CreateGroup';
 import { GroupsContainer } from './Groups';
 import { AddToGroupContainer } from './AddToGroup';
 import { CreateDebtContainer } from './CreateDebt';
+import { ViewDebtsContainer } from './ViewDebts';
 
 export class Page extends React.Component {
   render() {
@@ -30,6 +31,8 @@ export class Page extends React.Component {
         return (<AddToGroupContainer />);
       case 'CreateDebt':
         return (<CreateDebtContainer />);
+      case 'ViewDebts':
+        return (<ViewDebtsContainer />);
       default:
         return (<div>Error</div>);
     }

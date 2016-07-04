@@ -14,5 +14,6 @@ namespace KasKamSkolingas.Server.Services
         bool AddUserToGroup(string userId, string groupName, string usernameToAdd);
         object GetGroupData(string userId, string groupName);
         bool CreateDebt(string groupName, string usernameFrom, string userIdTo, decimal amount, string whatFor);
+        object GetUserDebts(string userId);
     }
 }

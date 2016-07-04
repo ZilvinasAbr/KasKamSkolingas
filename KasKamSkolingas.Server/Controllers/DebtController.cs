@@ -39,5 +39,20 @@ namespace KasKamSkolingas.Server.Controllers
 
             return false;
         }
+
+        [HttpGet("userdebts")]
+        public object GetUserDebts()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+
+                var result = _applicationService.GetUserDebts(userId);
+
+                return result;
+            }
+
+            return null;
+        }
     }
 }

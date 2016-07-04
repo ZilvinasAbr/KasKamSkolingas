@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using KasKamSkolingas.Server.Data;
 using KasKamSkolingas.Server.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace KasKamSkolingas.Server.Services
 {
@@ -171,6 +172,41 @@ namespace KasKamSkolingas.Server.Services
             _dbContext.SaveChanges();
 
             return true;
+        }
+
+        public object GetUserDebts(string userId)
+        {
+            var user = _dbContext.ApplicationUsers
+                .SingleOrDefault(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var debts = _dbContext.Debts
+                .Include(d => d.From)
+                .Include(d => d.To)
+                .Include(d => d.Group)
+                .Where(d => d.From.Id == userId || d.To.Id == userId);
+
+            List<object> result = new List<object>();
+
+            foreach (var debt in debts)
+            {
+                var newDebt = new
+                {
+                    userFrom = debt.From.UserName,
+                    userTo = debt.To.UserName,
+                    group = debt.Group.Name,
+                    amount = debt.Amount,
+                    whatFor = debt.Description
+                };
+
+                result.Add(newDebt);
+            }
+
+            return result;
         }
     }
 }
