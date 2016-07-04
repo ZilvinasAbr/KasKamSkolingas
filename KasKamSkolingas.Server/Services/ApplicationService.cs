@@ -60,5 +60,50 @@ namespace KasKamSkolingas.Server.Services
 
             return new {groups = groupNames};
         }
+
+        public IEnumerable<string> FindUsernames(string searchTerm)
+        {
+            List<string> mockDataList = new List<string>()
+            {
+                "Test1",
+                "Test2",
+                "Test3"
+            };
+
+            return mockDataList;
+        }
+
+        public bool AddUserToGroup(string userId, string groupName, string usernameToAdd)
+        {
+            var userToAdd = _dbContext.ApplicationUsers
+                .SingleOrDefault(a => a.UserName == usernameToAdd);
+            var group = _dbContext.Groups
+                .SingleOrDefault(g => g.Name == groupName);
+            var userThatIsAdding = _dbContext.ApplicationUsers
+                .SingleOrDefault(a => a.Id == userId);
+
+            if (userToAdd == null || group == null || userThatIsAdding == null || userToAdd.Id == userThatIsAdding.Id)
+            {
+                return false;
+            }
+
+            var applicationUserGroup = _dbContext.ApplicationUserGroups
+                .SingleOrDefault(ag => ag.ApplicationUserId == userThatIsAdding.Id && ag.GroupId == group.Id);
+
+            if (applicationUserGroup == null)
+            {
+                return false;
+            }
+
+            var newApplicationUserGroup = new ApplicationUserGroup()
+            {
+                ApplicationUser = userToAdd,
+                Group = group
+            };
+
+            _dbContext.ApplicationUserGroups.Add(newApplicationUserGroup);
+            _dbContext.SaveChanges();
+            return true;
+        }
     }
 }

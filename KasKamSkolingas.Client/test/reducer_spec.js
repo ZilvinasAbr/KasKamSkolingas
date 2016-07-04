@@ -131,6 +131,23 @@ describe('reducer', () => {
     }));
   });
 
+  it('handles SET_CURRENT_PAGE to AddToGroup', () => {
+    const initialState = Map({
+      isLoggedIn: true,
+      currentPage: 'Landing'
+    });
+    const action = {
+      type: 'SET_CURRENT_PAGE',
+      page: 'AddToGroup'
+    };
+    const nextState = reducer(initialState, action);
+
+    expect(nextState).to.equal(fromJS({
+      isLoggedIn: true,
+      currentPage: 'AddToGroup'
+    }));
+  });
+
   it('handles RECEIVE_USER_DATA', () => {
     const initialState = Map({
       isLoggedIn: true,

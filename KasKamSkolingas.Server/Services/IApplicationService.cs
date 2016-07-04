@@ -10,5 +10,7 @@ namespace KasKamSkolingas.Server.Services
         bool CreateGroup(string userId, string groupName);
         IEnumerable<string> GetUserGroups(string userId);
         object GetUserData(string userId);
+        IEnumerable<string> FindUsernames(string searchTerm);
+        bool AddUserToGroup(string userId, string groupName, string usernameToAdd);
     }
 }

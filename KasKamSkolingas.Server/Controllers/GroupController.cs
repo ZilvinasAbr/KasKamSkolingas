@@ -41,5 +41,19 @@ namespace KasKamSkolingas.Server.Controllers
 
             return false;
         }
+
+        [HttpPost("addtogroup")]
+        public bool AddToGroup([FromBody] AddToGroupViewModel model)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = User.GetUserId();
+                var result = _applicationService.AddUserToGroup(userId, model.GroupName, model.Username);
+
+                return result;
+            }
+
+            return false;
+        }
     }
 }

@@ -5,6 +5,7 @@ import { RegisterContainer } from './Register';
 import Landing from './Landing';
 import { CreateGroupContainer } from './CreateGroup';
 import { GroupsContainer } from './Groups';
+import { AddToGroupContainer } from './AddToGroup';
 
 export class Page extends React.Component {
   render() {
@@ -24,6 +25,8 @@ export class Page extends React.Component {
         return (<CreateGroupContainer />);
       case 'Groups':
         return (<GroupsContainer />);
+      case 'AddToGroup':
+        return (<AddToGroupContainer />);
       default:
         return (<div>Error</div>);
     }

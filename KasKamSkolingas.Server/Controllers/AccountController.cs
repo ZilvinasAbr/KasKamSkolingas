@@ -104,5 +104,19 @@ namespace KasKamSkolingas.Server.Controllers
             return result;
         }
 
+        [HttpGet("findusers")]
+        public IEnumerable<string> FindUsernames(string searchTerm)
+        {
+            var userId = HttpContext.User.GetUserId();
+            if (userId == null)
+            {
+                return null;
+            }
+
+            var result = _applicationService.FindUsernames(searchTerm);
+
+            return result;
+        }
+
     }
 }

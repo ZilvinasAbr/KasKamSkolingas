@@ -14,6 +14,8 @@ namespace KasKamSkolingas.Server.Data
         public DbSet<Group> Groups { get; set; }
         public DbSet<ApplicationUserGroup> ApplicationUserGroups { get; set; }
 
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

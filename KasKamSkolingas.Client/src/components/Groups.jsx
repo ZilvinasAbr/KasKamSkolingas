@@ -10,8 +10,8 @@ export class Groups extends React.Component {
     return (
       <div>
       {
-        this.props.groups.map((group) => (
-          <p>{group}</p>
+        this.props.groups.map((group, index) => (
+          <p key={index} id={index}>{group}</p>
         ))
       }
       </div>

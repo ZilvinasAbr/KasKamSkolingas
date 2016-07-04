@@ -10,6 +10,16 @@ export class Tab extends React.Component {
     this.handleLogOff = this.handleLogOff.bind(this);
   }
 
+  renderButton(nextCurrentPage, title) {
+    return (
+      <button onClick= {
+        e => {
+          this.props.dispatch(setCurrentPage(nextCurrentPage)) 
+        }
+      }>{title}</button>
+    );
+  }
+
   handleLogOff() {
     axios.post('api/account/logoff', {})
       .then((response) => {
@@ -27,38 +37,19 @@ export class Tab extends React.Component {
     if(this.props.isLoggedIn === true){
       toRender = (
         <div>
-          <button onClick= {
-            e => {
-              this.props.dispatch(setCurrentPage('CreateGroup')) 
-            }
-          }>Create group</button>
-          <button onClick= {
-            e => {
-              this.props.dispatch(setCurrentPage('Groups')) 
-            }
-          }>Groups</button>
+          {this.renderButton('Landing', 'Landing')}
+          {this.renderButton('CreateGroup', 'Create group')}
+          {this.renderButton('Groups','Groups')}
+          {this.renderButton('AddToGroup', 'Add to group')}
           <button onClick= { this.handleLogOff }>Log off</button>
         </div>
       );
     }else{
       toRender = (
         <div>
-          <button onClick= {
-            e => {
-              this.props.dispatch(setCurrentPage('Landing')) 
-            }
-          }>Landing</button>
-          <button onClick= {
-            e => {
-              this.props.dispatch(setCurrentPage('Login')) 
-            }
-          }>Login</button>
-          <button onClick= {
-            e => {
-              this.props.dispatch(setCurrentPage('Register')) 
-            }
-          }>Register</button>
-            
+          {this.renderButton('Landing', 'Landing')}
+          {this.renderButton('Login', 'Login')}
+          {this.renderButton('Register', 'Register')}   
         </div>
       );
     }
