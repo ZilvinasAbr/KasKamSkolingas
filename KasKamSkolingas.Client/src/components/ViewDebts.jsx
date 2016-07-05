@@ -43,12 +43,36 @@ export class ViewDebts extends React.Component {
   				):(
   					<div>
   						<button>End debt</button>
-  						<button>Delete debt</button>
+  						<button onClick={this.onDeleteDebt.bind(this, index)}>
+  							Delete debt
+  						</button>
   					</div>
   				))}
   			</td>
   		</tr>
   	);
+	}
+
+	onDeleteDebt(index) {
+		console.log(index);
+		let debtToDelete = this.state.debts[index];
+
+		axios.post('api/debt/', { Id: debtToDelete.id })
+			.then((response) => {
+				if(response.data === true) {
+					console.log('Debt deleted');
+					console.log(debtToDelete.id);
+					let newDebts = this.state.debts.filter((debt, index2) => index2 !== index);
+					this.setState({
+						debts: newDebts
+					});
+				}else {
+					console.log('Could not delete debt');
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 
   render() {

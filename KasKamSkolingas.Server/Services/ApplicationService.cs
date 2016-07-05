@@ -212,5 +212,29 @@ namespace KasKamSkolingas.Server.Services
 
             return result;
         }
+
+        public bool DeleteDebt(string userId, long debtId)
+        {
+            var user = _dbContext.ApplicationUsers
+                .SingleOrDefault(u => u.Id == userId);
+            var debt = _dbContext.Debts
+                .Include(d => d.To)
+                .SingleOrDefault(d => d.Id == debtId);
+
+            if (user == null || debt == null)
+            {
+                return false;
+            }
+
+            if (debt.To.Id != user.Id)
+            {
+                return false;
+            }
+
+            _dbContext.Debts.Remove(debt);
+            _dbContext.SaveChanges();
+
+            return true;
+        }
     }
 }

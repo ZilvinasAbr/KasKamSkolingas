@@ -15,5 +15,6 @@ namespace KasKamSkolingas.Server.Services
         object GetGroupData(string userId, string groupName);
         bool CreateDebt(DateTime dateCreated, string groupName, string usernameFrom, string userIdTo, decimal amount, string whatFor);
         object GetUserDebts(string userId);
+        bool DeleteDebt(string userId, long debtId);
     }
 }
