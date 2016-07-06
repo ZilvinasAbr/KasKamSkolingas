@@ -192,4 +192,23 @@ describe('reducer', () => {
     }));
   });
 
+  it('handles SET_CURRENT_GROUP', () => {
+    const initialState = Map({
+      isLoggedIn: true,
+      currentPage: 'Groups',
+      currentGroup: ''
+    });
+    const action = {
+      type: 'SET_CURRENT_GROUP',
+      payload: 'Group1'
+    };
+    const nextState = reducer(initialState, action);
+
+    expect(nextState).to.equal(fromJS({
+      isLoggedIn: true,
+      currentPage: 'Groups',
+      currentGroup: 'Group1'
+    }));
+  });
+
 });

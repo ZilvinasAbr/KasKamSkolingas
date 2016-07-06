@@ -61,7 +61,7 @@ namespace KasKamSkolingas.Server.Controllers
         {
             if (_signInManager.IsSignedIn(User))
             {
-                var userId = HttpContext.User.GetUserId();
+                var userId = User.GetUserId();
 
                 var result = _applicationService.DeleteDebt(userId, debt.Id);
 
@@ -69,6 +69,19 @@ namespace KasKamSkolingas.Server.Controllers
             }
 
             return false;
+        }
+
+        [HttpPost("groupdebts")]
+        public object GetGroupDebts([FromBody] Group group)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = User.GetUserId();
+
+                var result = _applicationService.GetGroupDebts(group.Name, userId);
+            }
+
+            return null;
         }
     }
 }

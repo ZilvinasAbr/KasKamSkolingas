@@ -132,7 +132,7 @@ namespace KasKamSkolingas.Server.Services
                 .Where(ag => ag.GroupId == group.Id)
                 .Select(ag => ag.ApplicationUser.UserName);
 
-            return new { users};
+            return new { users, debts = GetGroupDebts(groupName, userId) };
         }
 
         public bool CreateDebt(DateTime dateCreated, string groupName, string usernameFrom, string userIdTo, decimal amount, string whatFor)
@@ -235,6 +235,53 @@ namespace KasKamSkolingas.Server.Services
             _dbContext.SaveChanges();
 
             return true;
+        }
+
+        public object GetGroupDebts(string groupName, string userId)
+        {
+            var user = _dbContext.ApplicationUsers
+                .SingleOrDefault(a => a.Id == userId);
+            var group = _dbContext.Groups
+                .SingleOrDefault(g => g.Name == groupName);
+
+            if (user == null || group == null)
+            {
+                return null;
+            }
+
+            var applicationUserGroup = _dbContext.ApplicationUserGroups
+                .SingleOrDefault(ag => ag.GroupId == group.Id &&
+                                       ag.ApplicationUserId == userId);
+
+            if (applicationUserGroup == null)
+            {
+                return null;
+            }
+
+            var groupDebts = _dbContext.Debts
+                .Include(d => d.From)
+                .Include(d => d.To)
+                .Where(d => d.Group.Id == group.Id);
+
+            IList<object> result = new List<object>();
+
+            foreach (var groupDebt in groupDebts)
+            {
+                var debt = new
+                {
+                    id = groupDebt.Id,
+                    dateCreated = groupDebt.DateCreated,
+                    userFrom = groupDebt.From.UserName,
+                    userTo = groupDebt.To.UserName,
+                    group = groupDebt.Group.Name,
+                    amount = groupDebt.Amount,
+                    whatFor = groupDebt.Description
+                };
+
+                result.Add(debt);
+            }
+
+            return result;
         }
     }
 }

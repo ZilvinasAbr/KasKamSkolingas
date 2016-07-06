@@ -41,6 +41,10 @@ function receiveGroupData(state, groupData) {
   return state.set('groupData', fromJS(groupData));
 }
 
+function setCurrentGroup(state, group) {
+  return state.set('currentGroup', group);
+}
+
 export function reducer(state = initialState, action) {
   switch(action.type) {
     case 'SET_INITIAL_STATE':
@@ -55,6 +59,8 @@ export function reducer(state = initialState, action) {
       return receiveUserData(state, action.data);
     case 'RECEIVE_GROUP_DATA':
       return receiveGroupData(state, action.payload);
+    case 'SET_CURRENT_GROUP':
+      return setCurrentGroup(state, action.payload);
     default:
       return state;
   }

@@ -36,3 +36,10 @@ export function receiveGroupData(json) {
     payload: json
   }
 }
+
+export function setCurrentGroup(group) {
+  return {
+    type: 'SET_CURRENT_GROUP',
+    payload: group
+  }
+}
