@@ -17,5 +17,6 @@ namespace KasKamSkolingas.Server.Services
         object GetUserDebts(string userId);
         bool DeleteDebt(string userId, long debtId);
         object GetGroupDebts(string groupName, string userId);
+        bool EndDebt(string userId, long debtId);
     }
 }

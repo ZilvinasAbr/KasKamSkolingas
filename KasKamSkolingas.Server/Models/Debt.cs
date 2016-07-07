@@ -12,6 +12,7 @@ namespace KasKamSkolingas.Server.Models
         public DateTime DateCreated { get; set; }
         public decimal Amount { get; set; }
         public string Description { get; set; }
+        public bool IsDebtPaid { get; set; }
 
         public ApplicationUser From { get; set; }
         public ApplicationUser To { get; set; }

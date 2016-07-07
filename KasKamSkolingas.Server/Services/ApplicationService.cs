@@ -189,7 +189,8 @@ namespace KasKamSkolingas.Server.Services
                 .Include(d => d.From)
                 .Include(d => d.To)
                 .Include(d => d.Group)
-                .Where(d => d.From.Id == userId || d.To.Id == userId);
+                .Where(d => d.From.Id == userId || d.To.Id == userId)
+                .Where(d => d.IsDebtPaid == false);
 
             List<object> result = new List<object>();
 
@@ -261,7 +262,8 @@ namespace KasKamSkolingas.Server.Services
             var groupDebts = _dbContext.Debts
                 .Include(d => d.From)
                 .Include(d => d.To)
-                .Where(d => d.Group.Id == group.Id);
+                .Where(d => d.Group.Id == group.Id &&
+                            d.IsDebtPaid == false);
 
             IList<object> result = new List<object>();
 
@@ -282,6 +284,30 @@ namespace KasKamSkolingas.Server.Services
             }
 
             return result;
+        }
+
+        public bool EndDebt(string userId, long debtId)
+        {
+            var user = _dbContext.ApplicationUsers
+                .SingleOrDefault(u => u.Id == userId);
+            var debt = _dbContext.Debts
+                .Include(d => d.To)
+                .SingleOrDefault(d => d.Id == debtId);
+
+            if (user == null || debt == null)
+            {
+                return false;
+            }
+
+            if (debt.To.Id != user.Id)
+            {
+                return false;
+            }
+
+            debt.IsDebtPaid = true;
+            _dbContext.SaveChanges();
+
+            return true;
         }
     }
 }

@@ -56,7 +56,7 @@ namespace KasKamSkolingas.Server.Controllers
             return null;
         }
 
-        [HttpPost]
+        [HttpPost("delete")]
         public bool DeleteDebt([FromBody] Debt debt)
         {
             if (_signInManager.IsSignedIn(User))
@@ -64,6 +64,21 @@ namespace KasKamSkolingas.Server.Controllers
                 var userId = User.GetUserId();
 
                 var result = _applicationService.DeleteDebt(userId, debt.Id);
+
+                return result;
+            }
+
+            return false;
+        }
+
+        [HttpPut("end")]
+        public bool EndDebt([FromBody] Debt debt)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = User.GetUserId();
+
+                var result = _applicationService.EndDebt(userId, debt.Id);
 
                 return result;
             }
