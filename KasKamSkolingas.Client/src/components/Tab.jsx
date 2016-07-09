@@ -43,6 +43,7 @@ export class Tab extends React.Component {
           {this.renderButton('AddToGroup', 'Add to group')}
           {this.renderButton('CreateDebt', 'Create debt')}
           {this.renderButton('ViewDebts', 'View debts')}
+          {this.renderButton('LeaveGroup', 'Leave group')}
           <button onClick= { this.handleLogOff }>Log off</button>
         </div>
       );

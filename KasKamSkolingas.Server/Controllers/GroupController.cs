@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
 using KasKamSkolingas.Server.Models;
 using KasKamSkolingas.Server.Models.ViewModels;
 using KasKamSkolingas.Server.Services;
@@ -64,7 +65,35 @@ namespace KasKamSkolingas.Server.Controllers
             }
 
             return null;
-
         }
+
+        [HttpPost("leave")]
+        public bool LeaveGroup([FromBody] Group group)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = User.GetUserId();
+                var result = _applicationService.LeaveGroup(userId, group.Name);
+
+                return result;
+            }
+
+            return false;
+        }
+
+        // Probably not needed for now
+        /*[HttpGet("usergroups")]
+        public IEnumerable<string> GetUserGroups()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = User.GetUserId();
+                var result = _applicationService.GetUserGroups(userId);
+
+                return result;
+            }
+
+            return null;
+        }*/
     }
 }

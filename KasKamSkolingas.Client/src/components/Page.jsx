@@ -8,6 +8,7 @@ import { GroupsContainer } from './Groups';
 import { AddToGroupContainer } from './AddToGroup';
 import { CreateDebtContainer } from './CreateDebt';
 import { ViewDebtsContainer } from './ViewDebts';
+import { LeaveGroupContainer } from './LeaveGroup';
 
 export class Page extends React.Component {
   render() {
@@ -33,6 +34,8 @@ export class Page extends React.Component {
         return (<CreateDebtContainer />);
       case 'ViewDebts':
         return (<ViewDebtsContainer />);
+      case 'LeaveGroup':
+        return (<LeaveGroupContainer />);
       default:
         return (<div>Error</div>);
     }

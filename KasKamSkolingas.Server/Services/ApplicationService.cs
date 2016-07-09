@@ -309,5 +309,36 @@ namespace KasKamSkolingas.Server.Services
 
             return true;
         }
+
+        public bool LeaveGroup(string userId, string groupName)
+        {
+            var user = _dbContext.ApplicationUsers
+                .SingleOrDefault(a => a.Id == userId);
+            var group = _dbContext.Groups
+                .SingleOrDefault(g => g.Name == groupName);
+
+            if (user == null || group == null)
+            {
+                return false;
+            }
+
+            var userGroupDebts = _dbContext.Debts
+                .Where(g => g.Group == group)
+                .SingleOrDefault(g => g.From.Id == userId || g.To.Id == userId);
+
+            if (userGroupDebts != null)
+            {
+                return false;
+            }
+
+            var applicationUserGroupToRemove = _dbContext.ApplicationUserGroups
+                .SingleOrDefault(ag => ag.ApplicationUserId == userId &&
+                                       ag.GroupId == group.Id);
+
+            _dbContext.ApplicationUserGroups.Remove(applicationUserGroupToRemove);
+            _dbContext.SaveChanges();
+
+            return true;
+        }
     }
 }
