@@ -340,5 +340,43 @@ namespace KasKamSkolingas.Server.Services
 
             return true;
         }
+
+        public object GetUserStatistics(string userId)
+        {
+            var user = _dbContext.ApplicationUsers
+                .SingleOrDefault(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var debtFrom = _dbContext.Debts
+                .Where(d => d.From.Id == userId)
+                .Select(d => d.Amount);
+            var debtTo = _dbContext.Debts
+                .Where(d => d.To.Id == userId)
+                .Select(d => d.Amount);
+
+            decimal overallDebtFrom = 0M;
+            decimal overallDebtTo = 0M;
+
+            foreach (var debtAmount in debtFrom)
+            {
+                overallDebtFrom += debtAmount;
+            }
+
+            foreach (var debtAmount in debtTo)
+            {
+                overallDebtTo += debtAmount;
+            }
+
+            return new
+            {
+                overallBalance = overallDebtTo - overallDebtFrom,
+                inDebt = overallDebtFrom,
+                debtTo = overallDebtTo
+            };
+        }
     }
 }

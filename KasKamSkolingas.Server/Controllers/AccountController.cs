@@ -118,5 +118,20 @@ namespace KasKamSkolingas.Server.Controllers
             return result;
         }
 
+        [HttpGet("getuserstatistics")]
+        public object GetUserStatistics()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = User.GetUserId();
+
+                var result = _applicationService.GetUserStatistics(userId);
+
+                return result;
+            }
+
+            return null;
+        }
+
     }
 }

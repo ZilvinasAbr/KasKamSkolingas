@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { GroupContainer } from './Group';
-import { setCurrentGroup, receiveUserData } from '../action_creators';
-import { fetchGroupData } from '../actions';
+import { setCurrentGroup } from '../action_creators';
+import { fetchGroupData, fetchUserData } from '../actions';
 
 export class LeaveGroup extends React.Component {
 
@@ -32,7 +32,7 @@ export class LeaveGroup extends React.Component {
   	})
   	.then((response) => {
   		if(response.data === true) {
-  			this.props.dispatch(receiveUserData());
+  			fetchUserData(this.props.dispatch);
   		}else {
   			console.log('Could not leave the group');
   		}
