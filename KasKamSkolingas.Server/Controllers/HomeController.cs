@@ -12,20 +12,5 @@ namespace KasKamSkolingas.Server.Controllers
         {
             return View();
         }
-
-        public IActionResult Main()
-        {
-            return View();
-        }
-
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        public IActionResult Login()
-        {
-            return View();
-        }
     }
 }

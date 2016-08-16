@@ -8,8 +8,6 @@ import { reducer, initialState } from './reducer';
 import { TabContainer } from './components/Tab';
 import { PageContainer } from './components/Page';
 import { setInitialState } from './action_creators';
-//import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.css';
 
 const store = createStore(reducer, initialState, compose(
   typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : (f) => f
