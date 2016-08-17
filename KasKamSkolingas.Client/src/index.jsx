@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import Axios from 'axios';
-import { Router, Route, hashHistory, IndexRoute } from 'react-router';
-import { createStore, compose } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { reducer, initialState } from './reducer';
-import { TabContainer } from './components/Tab';
-import { PageContainer } from './components/Page';
-import { setInitialState } from './action_creators';
+import reducer from './reducers/index';
+import HomePage from './components/home/HomePage';
 
-const store = createStore(reducer, initialState, compose(
-  typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : (f) => f
-))
+const initialState = {};
+
+const store = createStore(reducer,
+  initialState,
+  compose(
+    applyMiddleware(
+      thunkMiddleware
+    ),
+    typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : (f) => f
+));
 
 class App extends React.Component {
 	constructor(props) {
@@ -21,8 +25,7 @@ class App extends React.Component {
 	render() {
 	  return (
 			<div>
-				<TabContainer />
-        <PageContainer />
+				<HomePage />
 			</div>
 	  );
 	}

@@ -65,7 +65,7 @@ export class Tab extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    isLoggedIn: state.get('isLoggedIn')
+    isLoggedIn: state.isLoggedIn
   };
 }
 

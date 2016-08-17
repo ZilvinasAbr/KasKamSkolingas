@@ -47,7 +47,7 @@ export class Page extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    currentPage: state.get('currentPage')
+    currentPage: state.currentPage
   };
 }
 

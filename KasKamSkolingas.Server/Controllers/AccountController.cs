@@ -51,6 +51,28 @@ namespace KasKamSkolingas.Server.Controllers
             return false;
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<bool> RegisterAccount(RegisterViewModel model)
+        {
+            if (model.Password != model.ConfirmPassword)
+            {
+                return false;
+            }
+
+            var user = new ApplicationUser { UserName = model.UserName };
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return true;
+            }
+
+            return false;
+        }
+
         [HttpPost("login")]
         /*[AllowAnonymous]
         [ValidateAntiForgeryToken]*/
@@ -88,6 +110,66 @@ namespace KasKamSkolingas.Server.Controllers
 
             return false;
         }
+
+        [HttpGet("homepagedata")]
+        public object GetHomePageData()
+        {
+            return new
+            {
+                groups = new List<object>
+                {
+                    new
+                    {
+                        view = "default",
+                        name = "Group 1",
+                        inDebt = 12.1M,
+                        debtTo = 12.4M,
+                        debts = new List<object>
+                        {
+                            new
+                            {
+                                userInDebt = "Zamba",
+                                userDebtTo = "Zalvanas",
+                                description = "Nesumokejo uz kebaba",
+                                amount = 10M
+                            },
+                            new
+                            {
+                                userInDebt = "Zalvanas",
+                                userDebtTo = "Donatakas",
+                                description = "Nesumokejo uz koldunus",
+                                amount = 2M
+                            }
+                        }
+                    },
+                    new
+                    {
+                        view = "default",
+                        name = "Group 2",
+                        inDebt = 12.1M,
+                        debtTo = 12.4M,
+                        debts = new List<object>
+                        {
+                            new
+                            {
+                                userInDebt = "Zamba",
+                                userDebtTo = "Zalvanas",
+                                description = "Nesumokejo uz kebaba",
+                                amount = 10M
+                            },
+                            new
+                            {
+                                userInDebt = "Zalvanas",
+                                userDebtTo = "Donatakas",
+                                description = "Nesumokejo uz koldunus",
+                                amount = 2M
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
 
         [HttpGet("getuserdata")]
         public object GetUserData()

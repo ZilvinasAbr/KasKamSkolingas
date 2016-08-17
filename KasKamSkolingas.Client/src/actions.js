@@ -1,5 +1,11 @@
+import fetch from 'isomorphic-fetch';
 import axios from 'axios';
-import { receiveUserData, receiveGroupData } from './action_creators';
+import {
+	receiveUserData,
+	receiveGroupData,
+	requestHomePageData,
+	receiveHomePageData
+} from './action_creators';
 
 /*function requestUserData() {
 	return {type: 'REQUEST_USER_DATA'}
@@ -15,7 +21,7 @@ export function fetchUserData(dispatch) {
 		.catch((error) => {
 			console.log(error);
 		});
-};
+}
 
 export function fetchGroupData(dispatch, groupName) {
 	axios.post('api/group/getgroupdata', {
@@ -27,6 +33,18 @@ export function fetchGroupData(dispatch, groupName) {
 	.catch((error) => {
 		console.log(error);
 	})
+}
+
+export function fetchHomePageData() {
+	return dispatch => {
+		dispatch(requestHomePageData());
+
+		return axios.get('api/account/homepagedata')
+			.then(response => {
+				dispatch(receiveHomePageData(response.data))
+			})
+			.catch(error => console.log(error));
+	}
 }
 
 // Error: Use custom middleware for async actions

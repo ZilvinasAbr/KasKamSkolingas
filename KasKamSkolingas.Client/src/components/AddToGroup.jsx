@@ -74,7 +74,7 @@ export class AddToGroup extends React.Component {
 
 function mapStateToProps(state) {
   return {
-  	groups: state.getIn(['userData', 'groups'])
+  	groups: state.userData.groups
   }
 }
 

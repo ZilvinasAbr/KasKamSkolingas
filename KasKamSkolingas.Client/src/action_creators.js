@@ -28,7 +28,7 @@ export function receiveUserData(json) {
     type: 'RECEIVE_USER_DATA',
     data: json
   }
-};
+}
 
 export function receiveGroupData(json) {
   return {
@@ -42,4 +42,70 @@ export function setCurrentGroup(group) {
     type: 'SET_CURRENT_GROUP',
     payload: group
   }
+}
+
+// New action creators and action types
+
+export const REQUEST_HOME_PAGE_DATA = 'REQUEST_HOME_PAGE_DATA';
+export function requestHomePageData() {
+  return {
+    type: REQUEST_HOME_PAGE_DATA
+  };
+}
+
+export const RECEIVE_HOME_PAGE_DATA = 'RECEIVE_HOME_PAGE_DATA';
+export function receiveHomePageData(json) {
+  console.log(json);
+  return {
+    type: RECEIVE_HOME_PAGE_DATA,
+    json
+  };
+}
+
+export const CHANGE_GROUP_VIEW_TO_SETTINGS = 'CHANGE_GROUP_VIEW_TO_SETTINGS';
+export function changeGroupViewToSettings(groupIndex) {
+  return {
+    type: CHANGE_GROUP_VIEW_TO_SETTINGS,
+    groupIndex
+  }
+}
+
+export const CHANGE_GROUP_VIEW_TO_DEFAULT = 'CHANGE_GROUP_VIEW_TO_DEFAULT';
+export function changeGroupViewToDefault(groupIndex) {
+  return {
+    type: CHANGE_GROUP_VIEW_TO_DEFAULT,
+    groupIndex
+  };
+}
+
+export const CHANGE_GROUP_VIEW_TO_CREATE_DEBT = 'CHANGE_GROUP_VIEW_TO_CREATE_DEBT';
+export function changeGroupViewToCreateDebt(groupIndex) {
+  return {
+    type: CHANGE_GROUP_VIEW_TO_CREATE_DEBT,
+    groupIndex
+  };
+}
+
+export const CHANGE_GROUP_VIEW_TO_VIEW_DEBTS = 'CHANGE_GROUP_VIEW_TO_VIEW_DEBTS';
+export function changeGroupViewToViewDebts(groupIndex) {
+  return {
+    type: CHANGE_GROUP_VIEW_TO_VIEW_DEBTS,
+    groupIndex
+  };
+}
+
+export const CHANGE_GROUP_VIEW_TO_ADD_TO_GROUP = 'CHANGE_GROUP_VIEW_TO_ADD_TO_GROUP';
+export function changeGroupViewToAddToGroup(groupIndex) {
+  return {
+    type: CHANGE_GROUP_VIEW_TO_ADD_TO_GROUP,
+    groupIndex
+  };
+}
+
+export const CHANGE_GROUP_VIEW_TO_LEAVE_GROUP = 'CHANGE_GROUP_VIEW_TO_LEAVE_GROUP';
+export function changeGroupViewToLeaveGroup(groupIndex) {
+  return {
+    type: CHANGE_GROUP_VIEW_TO_LEAVE_GROUP,
+    groupIndex
+  };
 }

@@ -65,8 +65,8 @@ export class Group extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    currentGroup: state.get('currentGroup'),
-    debts: state.getIn(['groupData', 'debts'])
+    currentGroup: state.currentGroup,
+    debts: state.groupData.debts
   }
 }
 

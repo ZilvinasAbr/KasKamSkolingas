@@ -110,8 +110,8 @@ export class CreateDebt extends React.Component {
 
 function mapStateToProps(state) {
   return {
-  	groups: state.getIn(['userData', 'groups']),
-  	groupUsers: state.getIn(['groupData', 'users'])
+  	groups: state.userData.groups,
+  	groupUsers: state.groupData.users
   }
 }
 
