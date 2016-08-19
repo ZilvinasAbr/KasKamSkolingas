@@ -4,7 +4,9 @@ import {
 	receiveUserData,
 	receiveGroupData,
 	requestHomePageData,
-	receiveHomePageData
+	receiveHomePageData,
+	requestCreateDebtSubmit,
+	receiveCreateDebtSubmit
 } from './action_creators';
 
 /*function requestUserData() {
@@ -44,8 +46,48 @@ export function fetchHomePageData() {
 				dispatch(receiveHomePageData(response.data))
 			})
 			.catch(error => console.log(error));
+	};
+}
+
+export function createDebtFormSubmit(groupName, usernameFrom,
+																		 amount, whatFor, groupIndex) {
+	return dispatch => {
+		dispatch(requestCreateDebtSubmit());
+
+		return axios.post('api/debt/create', {
+			GroupName: groupName,
+			UsernameFrom: usernameFrom,
+			Amount: amount,
+			WhatFor: whatFor
+		})
+			.then(response => {
+				dispatch(receiveCreateDebtSubmit(response.data, groupIndex));
+			})
+			.catch(error => {
+				console.log(error);
+			});
 	}
 }
+
+/*onSubmit() {
+	axios.post('api/debt/create', {
+		GroupName: this.state.group,
+		UsernameFrom: this.state.user,
+		Amount: this.state.amount,
+		WhatFor: this.state.whatFor
+	})
+		.then((response) => {
+			if(response.data === true) {
+				this.props.dispatch(setCurrentPage('Landing'));
+			}else {
+				console.log('Could not create debt');
+			}
+		})
+		.catch((error) => {
+			console.log(error);
+		})
+}*/
+
 
 // Error: Use custom middleware for async actions
 /*export function fetchUserData() {

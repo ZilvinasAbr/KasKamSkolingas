@@ -55,11 +55,26 @@ export function requestHomePageData() {
 
 export const RECEIVE_HOME_PAGE_DATA = 'RECEIVE_HOME_PAGE_DATA';
 export function receiveHomePageData(json) {
-  console.log(json);
   return {
     type: RECEIVE_HOME_PAGE_DATA,
     json
   };
+}
+
+export const REQUEST_CREATE_DEBT_SUBMIT = 'REQUEST_CREATE_DEBT_SUBMIT';
+export function requestCreateDebtSubmit() {
+  return {
+    type: REQUEST_CREATE_DEBT_SUBMIT
+  };
+}
+
+export const RECEIVE_CREATE_DEBT_SUBMIT = 'RECEIVE_CREATE_DEBT_SUBMIT';
+export function receiveCreateDebtSubmit(success, groupIndex) {
+  return {
+    type: RECEIVE_CREATE_DEBT_SUBMIT,
+    success,
+    groupIndex
+  }
 }
 
 export const CHANGE_GROUP_VIEW_TO_SETTINGS = 'CHANGE_GROUP_VIEW_TO_SETTINGS';

@@ -6,16 +6,23 @@ const GroupTile = (props) => {
   const handleSettingsClick = () => {
     if(props.view === 'default') {
       props.changeViewToSettings(props.index);
-    }else if(props.view === 'settings') {
+    }else /*if(props.view === 'settings')*/ {
       props.changeViewToDefault(props.index);
     }
+  };
+
+  const getButtonText = view => {
+    if(view === 'default')
+      return 'Settings';
+    else
+      return 'Back';
   };
 
   return (
     <div style={{borderStyle: 'solid', borderWidth: '1px', width: '256px', height: '128px'}}>
       <div style={{borderStyle: 'solid', borderWidth: '1px'}}>
         {props.groupName}
-        <button onClick={handleSettingsClick}>Settings</button>
+        <button onClick={handleSettingsClick}>{getButtonText(props.view)}</button>
       </div>
       <GroupTileWindow
         index={props.index}

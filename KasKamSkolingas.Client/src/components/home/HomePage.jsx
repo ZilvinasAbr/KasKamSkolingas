@@ -41,7 +41,8 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const groups = this.props.homepage.groups;
+    const homePage = this.props.state.homePage || {};
+    const groups = homePage.groups;
     
     return (
       <div>
@@ -54,7 +55,7 @@ class HomePage extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    homepage: state
+    state: state
   }
 }
 

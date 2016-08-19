@@ -1,44 +1,34 @@
 import React from 'react';
+import Default from './Default';
+import CreateDebt from './CreateDebt';
+import Settings from './Settings';
+import CreateDebtForm from './CreateDebtForm';
 
 const GroupTileWindow = (props) => {
   const renderView = (view, inDebt, debtTo) => {
     switch(view){
       case 'default':
         return (
-          <div>
-            <div>In debt: {inDebt}</div>
-            <div>Debt to: {debtTo}</div>
-            <div>Overall balance: {(debtTo - inDebt).toFixed(2)}</div>
-          </div>
+          <Default
+            inDebt={inDebt}
+            debtTo={debtTo}
+          />
         );
       case 'settings':
         return (
-          <div>
-            <div>
-              <button onClick={() => props.changeViewToCreateDebt(props.index)}>Create debt</button>
-            </div>
-            <div>
-              <button onClick={() => props.changeViewToViewDebts(props.index)}>View debts</button>
-            </div>
-            <div>
-              <button onClick={() => props.changeViewToAddToGroup(props.index)}>Add to group</button>
-            </div>
-            <div>
-              <button onClick={() => props.changeViewToLeaveGroup(props.index)}>Leave group</button>
-            </div>
-          </div>
+          <Settings
+            index={props.index}
+            changeViewToCreateDebt={props.changeViewToCreateDebt}
+            changeViewToViewDebts={props.changeViewToViewDebts}
+            changeViewToAddToGroup={props.changeViewToAddToGroup}
+            changeViewToLeaveGroup={props.changeViewToLeaveGroup}
+          />
         );
       case 'createDebt':
         return (
-          <div>
-            <label>User:</label>
-            <input type='text' />
-            <label>Amount:</label>
-            <input type='number' />
-            <label>What for:</label>
-            <input type='text' />
-            <button>Create</button>
-          </div>
+          <CreateDebtForm
+            index={props.index}
+          />
         );
       case 'viewDebts':
         return (
