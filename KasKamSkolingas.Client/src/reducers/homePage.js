@@ -34,11 +34,16 @@ function requestCreateDebtSubmit(state) {
 
 function receiveCreateDebtSubmit(state, action) {
   let newState = Object.assign({}, state);
-  
+
+  console.log(newState.groups);
+
+  let group = newState.groups.filter((group) => group.name === action.groupName);
+  group = group[0];
+
   if(action.success)
-    newState.groups[action.groupIndex].view = 'default';
+    group.view = 'default';
   else
-    newState.groups[action.groupIndex].view = 'createDebt';
+    group.view = 'createDebt';
 
   return newState;
 }

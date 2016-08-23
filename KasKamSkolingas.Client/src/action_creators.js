@@ -69,12 +69,12 @@ export function requestCreateDebtSubmit() {
 }
 
 export const RECEIVE_CREATE_DEBT_SUBMIT = 'RECEIVE_CREATE_DEBT_SUBMIT';
-export function receiveCreateDebtSubmit(success, groupIndex) {
+export function receiveCreateDebtSubmit(success, groupName) {
   return {
     type: RECEIVE_CREATE_DEBT_SUBMIT,
     success,
-    groupIndex
-  }
+    groupName
+  };
 }
 
 export const CHANGE_GROUP_VIEW_TO_SETTINGS = 'CHANGE_GROUP_VIEW_TO_SETTINGS';
@@ -82,7 +82,7 @@ export function changeGroupViewToSettings(groupIndex) {
   return {
     type: CHANGE_GROUP_VIEW_TO_SETTINGS,
     groupIndex
-  }
+  };
 }
 
 export const CHANGE_GROUP_VIEW_TO_DEFAULT = 'CHANGE_GROUP_VIEW_TO_DEFAULT';

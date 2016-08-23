@@ -1,6 +1,5 @@
 import React from 'react';
 import Default from './Default';
-import CreateDebt from './CreateDebt';
 import Settings from './Settings';
 import CreateDebtForm from './CreateDebtForm';
 
@@ -28,6 +27,7 @@ const GroupTileWindow = (props) => {
         return (
           <CreateDebtForm
             index={props.index}
+            groupName={props.groupName}
           />
         );
       case 'viewDebts':

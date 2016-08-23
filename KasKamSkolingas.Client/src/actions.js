@@ -50,7 +50,7 @@ export function fetchHomePageData() {
 }
 
 export function createDebtFormSubmit(groupName, usernameFrom,
-																		 amount, whatFor, groupIndex) {
+																		 amount, whatFor) {
 	return dispatch => {
 		dispatch(requestCreateDebtSubmit());
 
@@ -61,7 +61,7 @@ export function createDebtFormSubmit(groupName, usernameFrom,
 			WhatFor: whatFor
 		})
 			.then(response => {
-				dispatch(receiveCreateDebtSubmit(response.data, groupIndex));
+				dispatch(receiveCreateDebtSubmit(response.data, groupName));
 			})
 			.catch(error => {
 				console.log(error);

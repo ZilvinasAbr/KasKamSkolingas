@@ -20,5 +20,6 @@ namespace KasKamSkolingas.Server.Services
         bool EndDebt(string userId, long debtId);
         bool LeaveGroup(string userId, string groupName);
         object GetUserStatistics(string userId);
+        object GetHomePageData(string userId);
     }
 }

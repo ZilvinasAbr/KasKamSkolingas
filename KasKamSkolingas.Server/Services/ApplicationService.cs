@@ -16,7 +16,6 @@ namespace KasKamSkolingas.Server.Services
         {
             _dbContext = dbContext;
         }
-
         public bool CreateGroup(string userId, string groupName)
         {
             var user = _dbContext.Users
@@ -44,7 +43,6 @@ namespace KasKamSkolingas.Server.Services
 
             return true;
         }
-
         public IEnumerable<string> GetUserGroups(string userId)
         {
             var groupNames = _dbContext
@@ -54,14 +52,12 @@ namespace KasKamSkolingas.Server.Services
 
             return groupNames;
         }
-
         public object GetUserData(string userId)
         {
             var groupNames = GetUserGroups(userId);
 
             return new {groups = groupNames};
         }
-
         public IEnumerable<string> FindUsernames(string searchTerm)
         {
             List<string> mockDataList = new List<string>()
@@ -73,7 +69,6 @@ namespace KasKamSkolingas.Server.Services
 
             return mockDataList;
         }
-
         public bool AddUserToGroup(string userId, string groupName, string usernameToAdd)
         {
             var userToAdd = _dbContext.ApplicationUsers
@@ -106,7 +101,6 @@ namespace KasKamSkolingas.Server.Services
             _dbContext.SaveChanges();
             return true;
         }
-
         public object GetGroupData(string userId, string groupName)
         {
             var user = _dbContext.ApplicationUsers
@@ -134,7 +128,6 @@ namespace KasKamSkolingas.Server.Services
 
             return new { users, debts = GetGroupDebts(groupName, userId) };
         }
-
         public bool CreateDebt(DateTime dateCreated, string groupName, string usernameFrom, string userIdTo, decimal amount, string whatFor)
         {
             var group = _dbContext.Groups
@@ -174,7 +167,6 @@ namespace KasKamSkolingas.Server.Services
 
             return true;
         }
-
         public object GetUserDebts(string userId)
         {
             var user = _dbContext.ApplicationUsers
@@ -213,7 +205,6 @@ namespace KasKamSkolingas.Server.Services
 
             return result;
         }
-
         public bool DeleteDebt(string userId, long debtId)
         {
             var user = _dbContext.ApplicationUsers
@@ -237,7 +228,6 @@ namespace KasKamSkolingas.Server.Services
 
             return true;
         }
-
         public object GetGroupDebts(string groupName, string userId)
         {
             var user = _dbContext.ApplicationUsers
@@ -285,7 +275,6 @@ namespace KasKamSkolingas.Server.Services
 
             return result;
         }
-
         public bool EndDebt(string userId, long debtId)
         {
             var user = _dbContext.ApplicationUsers
@@ -309,7 +298,6 @@ namespace KasKamSkolingas.Server.Services
 
             return true;
         }
-
         public bool LeaveGroup(string userId, string groupName)
         {
             var user = _dbContext.ApplicationUsers
@@ -340,7 +328,6 @@ namespace KasKamSkolingas.Server.Services
 
             return true;
         }
-
         public object GetUserStatistics(string userId)
         {
             var user = _dbContext.ApplicationUsers
@@ -376,6 +363,79 @@ namespace KasKamSkolingas.Server.Services
                 overallBalance = overallDebtTo - overallDebtFrom,
                 inDebt = overallDebtFrom,
                 debtTo = overallDebtTo
+            };
+        }
+        public object GetHomePageData(string userId)
+        {
+            var user = _dbContext.ApplicationUsers
+                .SingleOrDefault(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var userGroups = _dbContext.ApplicationUserGroups
+                .Where(ag => ag.ApplicationUserId == userId)
+                .Select(ag => ag.Group);
+
+            var result = new List<object>();
+
+            foreach (var group in userGroups)
+            {
+                var groupData = GetHomePageGroupData(user, group);
+                result.Add(groupData);
+            }
+
+            return new
+            {
+                groups = result
+            };
+        }
+        public object GetHomePageGroupData(ApplicationUser user, Group group)
+        {
+            // TODO: This should be implemented better, the view string is needed for the client side, the default value is "default"
+            const string view = "default";
+            var name = group.Name;
+
+            var inDebt = _dbContext.Debts
+                .Where(d => d.Group.Id == group.Id)
+                .Where(d => d.From.Id == user.Id)
+                .Select(d => d.Amount)
+                .Sum();
+
+            var debtTo = _dbContext.Debts
+                .Where(d => d.Group.Id == group.Id)
+                .Where(d => d.To.Id == user.Id)
+                .Select(d => d.Amount)
+                .Sum();
+
+            var allGroupDebts = _dbContext.Debts
+                .Include(d => d.From)
+                .Include(d => d.To)
+                .Where(d => d.Group.Id == group.Id);
+
+            var debts = new List<object>();
+            foreach (var debt in allGroupDebts)
+            {
+                var debtToAdd = new
+                {
+                    userInDebt = debt.From.UserName,
+                    userDebtTo = debt.To.UserName,
+                    whatFor = debt.Description,
+                    amount = debt.Amount
+                };
+
+                debts.Add(debtToAdd);
+            }
+
+            return new
+            {
+                view,
+                name,
+                inDebt,
+                debtTo,
+                debts
             };
         }
     }
