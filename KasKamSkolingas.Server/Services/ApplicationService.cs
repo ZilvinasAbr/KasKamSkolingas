@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using KasKamSkolingas.Server.Data;
@@ -83,10 +84,11 @@ namespace KasKamSkolingas.Server.Services
                 return false;
             }
 
-            var applicationUserGroup = _dbContext.ApplicationUserGroups
-                .SingleOrDefault(ag => ag.ApplicationUserId == userThatIsAdding.Id && ag.GroupId == group.Id);
-
-            if (applicationUserGroup == null)
+            var applicationUserGroups = _dbContext.ApplicationUserGroups
+                .Where(ag => (ag.ApplicationUserId == userThatIsAdding.Id || ag.ApplicationUserId == userToAdd.Id) && ag.GroupId == group.Id);
+            
+            // If none of the users belong to the group or both belong, return false because new user cannot be added to the group
+            if (!applicationUserGroups.Any() || applicationUserGroups.Count() == 2)
             {
                 return false;
             }
@@ -394,8 +396,6 @@ namespace KasKamSkolingas.Server.Services
         }
         public object GetHomePageGroupData(ApplicationUser user, Group group)
         {
-            // TODO: This should be implemented better, the view string is needed for the client side, the default value is "default"
-            const string view = "default";
             var name = group.Name;
 
             var inDebt = _dbContext.Debts
@@ -431,7 +431,6 @@ namespace KasKamSkolingas.Server.Services
 
             return new
             {
-                view,
                 name,
                 inDebt,
                 debtTo,

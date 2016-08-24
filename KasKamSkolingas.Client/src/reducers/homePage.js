@@ -8,27 +8,37 @@ import {
   CHANGE_GROUP_VIEW_TO_ADD_TO_GROUP,
   CHANGE_GROUP_VIEW_TO_LEAVE_GROUP,
   REQUEST_CREATE_DEBT_SUBMIT,
-  RECEIVE_CREATE_DEBT_SUBMIT
+  RECEIVE_CREATE_DEBT_SUBMIT,
+  VIEW_NEXT_DEBT,
+  VIEW_PREVIOUS_DEBT,
+  REQUEST_ADD_TO_GROUP_SUBMIT,
+  RECEIVE_ADD_TO_GROUP_SUBMIT,
+  GROUP_MAIN_BUTTON_PRESSED
 } from '../action_creators';
 
 export const initialState = {};
 
 function requestHomePageData(state) {
-  return state;
+  return Object.assign({}, state);
 }
 
 function receiveHomePageData(state, json) {
-  return Object.assign({}, state, json);
+  let nextState = Object.assign({}, state, json);
+
+  nextState.groups.map(group => {
+    group.debtIndex = 0;
+    group.view = 'default';
+  });
+
+  return nextState;
 }
 
 function changeGroupViewTo(state, groupIndex, view) {
-  let group = Object.assign({}, state.groups[groupIndex], { view });
-  // let newGroups = Object.assign({}, state.groups);
-  // newGroups[groupIndex].view = view;
-  //
-  // return Object.assign({}, state, { groups: newGroups });
 
-  let newState = Object.assign({}, state);
+  let newState = Object.assign({}, {
+    groups: state.groups
+  });
+
   newState.groups[groupIndex].view = view;
 
   return newState;
@@ -38,20 +48,96 @@ function requestCreateDebtSubmit(state) {
   return state;
 }
 
-function receiveCreateDebtSubmit(state, action) {
+function receiveCreateDebtSubmit(state, success, groupName) {
   let newState = Object.assign({}, state);
 
   console.log(newState.groups);
 
-  let group = newState.groups.filter((group) => group.name === action.groupName);
+  let group = newState.groups.filter((group) => group.name === groupName);
   group = group[0];
 
-  if(action.success)
+  if(success)
     group.view = 'default';
   else
     group.view = 'createDebt';
 
   return newState;
+}
+
+function viewNextDebt(state, groupIndex) {
+  let nextState = Object.assign({}, state);
+  let group = nextState.groups[groupIndex];
+  if(group.debtIndex === undefined || group.debtIndex === null) {
+    group.debtIndex = 0;
+  }
+
+  group.debtIndex++;
+  if(group.debtIndex === group.debts.length)
+    nextState.groups[groupIndex].debtIndex = 0;
+  
+  return nextState;
+}
+
+function viewPreviousDebt(state, groupIndex) {
+  let nextState = Object.assign({}, state);
+  let group = nextState.groups[groupIndex];
+  if(group.debtIndex === undefined || group.debtIndex === null) {
+    group.debtIndex = 0;
+  }
+
+  group.debtIndex--;
+
+  if(group.debtIndex === -1)
+    nextState.groups[groupIndex].debtIndex = group.debts.length -1;
+
+  return nextState;
+}
+
+function requestAddToGroupSubmit(state) {
+  return Object.assign({}, state);
+}
+
+function receiveAddToGroupSubmit(state, success, groupName) {
+  let newState = Object.assign({}, state);
+
+  let group = newState.groups.filter((group) => group.name === groupName);
+  group = group[0];
+
+  if(success)
+    group.view = 'default';
+  else
+    group.view = 'addToGroup';
+
+  return newState;
+}
+
+function groupMainButtonPressed(state, groupIndex) {
+  const view = state.groups[groupIndex].view;
+
+  let nextState = Object.assign({}, state);
+
+  switch (view) {
+    case 'default':
+      nextState.groups[groupIndex].view = 'settings';
+      return nextState;
+    case 'settings':
+      nextState.groups[groupIndex].view = 'default';
+      return nextState;
+    case 'createDebt':
+      nextState.groups[groupIndex].view = 'settings';
+      return nextState;
+    case 'viewDebts':
+      nextState.groups[groupIndex].view = 'settings';
+      return nextState;
+    case 'addToGroup':
+      nextState.groups[groupIndex].view = 'settings';
+      return nextState;
+    case 'leaveGroup':
+      nextState.groups[groupIndex].view = 'settings';
+      return nextState;
+    default:
+      return state;
+  }
 }
 
 export function homePage(state = initialState, action) {
@@ -75,7 +161,17 @@ export function homePage(state = initialState, action) {
     case REQUEST_CREATE_DEBT_SUBMIT:
       return requestCreateDebtSubmit(state);
     case RECEIVE_CREATE_DEBT_SUBMIT:
-      return receiveCreateDebtSubmit(state, action);
+      return receiveCreateDebtSubmit(state, action.success, action.groupName);
+    case VIEW_NEXT_DEBT:
+      return viewNextDebt(state, action.groupIndex);
+    case VIEW_PREVIOUS_DEBT:
+      return viewPreviousDebt(state, action.groupIndex);
+    case REQUEST_ADD_TO_GROUP_SUBMIT:
+      return requestAddToGroupSubmit(state);
+    case RECEIVE_ADD_TO_GROUP_SUBMIT:
+      return receiveAddToGroupSubmit(state, action.success, action.groupName);
+    case GROUP_MAIN_BUTTON_PRESSED:
+      return groupMainButtonPressed(state, action.groupIndex);
     default:
       return state;
   }

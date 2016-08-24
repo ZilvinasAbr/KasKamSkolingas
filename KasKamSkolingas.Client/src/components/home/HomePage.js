@@ -7,7 +7,10 @@ import {
   changeGroupViewToCreateDebt,
   changeGroupViewToViewDebts,
   changeGroupViewToAddToGroup,
-  changeGroupViewToLeaveGroup
+  changeGroupViewToLeaveGroup,
+  viewNextDebt,
+  viewPreviousDebt,
+  groupMainButtonPressed
 } from '../../action_creators';
 import GroupTile from './GroupTile';
 
@@ -27,6 +30,7 @@ class HomePage extends React.Component {
         key={index}
         index={index}
         view={group.view}
+        debtIndex={group.debtIndex}
         groupName={group.name}
         inDebt={group.inDebt}
         debtTo={group.debtTo}
@@ -37,6 +41,10 @@ class HomePage extends React.Component {
         changeViewToViewDebts={this.props.changeViewToViewDebts}
         changeViewToAddToGroup={this.props.changeViewToAddToGroup}
         changeViewToLeaveGroup={this.props.changeViewToLeaveGroup}
+        viewNextDebt={this.props.viewNextDebt}
+        viewPreviousDebt={this.props.viewPreviousDebt}
+        group={group}
+        handleGroupMainButtonPress={this.props.handleGroupMainButtonPress}
       />);
   }
 
@@ -46,6 +54,7 @@ class HomePage extends React.Component {
     
     return (
       <div>
+        <button onClick={this.props.loadHomePageData}>Refresh</button>
         ZAAAAMBAAA
         {this.renderGroupTiles(groups)}
       </div>
@@ -81,6 +90,15 @@ function mapDispatchToProps(dispatch) {
     },
     changeViewToLeaveGroup: groupIndex => {
       dispatch(changeGroupViewToLeaveGroup(groupIndex));
+    },
+    viewNextDebt: groupIndex => {
+      dispatch(viewNextDebt(groupIndex));
+    },
+    viewPreviousDebt: groupIndex => {
+      dispatch(viewPreviousDebt(groupIndex));
+    },
+    handleGroupMainButtonPress: groupIndex => {
+      dispatch(groupMainButtonPressed(groupIndex));
     }
   }
 }

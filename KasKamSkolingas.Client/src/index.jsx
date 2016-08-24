@@ -6,7 +6,10 @@ import { Provider } from 'react-redux';
 import reducer from './reducers/index';
 import HomePage from './components/home/HomePage';
 
-const initialState = {};
+const initialState = {
+	homePage: {},
+	form: {}
+};
 
 const store = createStore(reducer, initialState, compose(
 	applyMiddleware(thunkMiddleware),

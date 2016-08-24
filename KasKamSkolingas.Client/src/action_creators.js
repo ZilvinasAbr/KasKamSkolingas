@@ -124,3 +124,43 @@ export function changeGroupViewToLeaveGroup(groupIndex) {
     groupIndex
   };
 }
+
+export const VIEW_NEXT_DEBT = 'VIEW_NEXT_DEBT';
+export function viewNextDebt(groupIndex) {
+  return {
+    type: VIEW_NEXT_DEBT,
+    groupIndex
+  };
+}
+
+export const VIEW_PREVIOUS_DEBT = 'VIEW_PREVIOUS_DEBT';
+export function viewPreviousDebt(groupIndex) {
+  return {
+    type: VIEW_PREVIOUS_DEBT,
+    groupIndex
+  };
+}
+
+export const REQUEST_ADD_TO_GROUP_SUBMIT = 'REQUEST_ADD_TO_GROUP_SUBMIT';
+export function requestAddToGroupSubmit() {
+  return {
+    type: REQUEST_ADD_TO_GROUP_SUBMIT
+  };
+}
+
+export const RECEIVE_ADD_TO_GROUP_SUBMIT = 'RECEIVE_ADD_TO_GROUP_SUBMIT';
+export function receiveAddToGroupSubmit(success, groupName) {
+  return {
+    type: RECEIVE_ADD_TO_GROUP_SUBMIT,
+    success,
+    groupName
+  };
+}
+
+export const GROUP_MAIN_BUTTON_PRESSED = 'GROUP_MAIN_BUTTON_PRESSED';
+export function groupMainButtonPressed(groupIndex) {
+  return {
+    type: GROUP_MAIN_BUTTON_PRESSED,
+    groupIndex
+  };
+}

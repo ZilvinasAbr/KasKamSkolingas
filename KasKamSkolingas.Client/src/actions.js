@@ -6,7 +6,9 @@ import {
 	requestHomePageData,
 	receiveHomePageData,
 	requestCreateDebtSubmit,
-	receiveCreateDebtSubmit
+	receiveCreateDebtSubmit,
+	requestAddToGroupSubmit,
+	receiveAddToGroupSubmit
 } from './action_creators';
 
 /*function requestUserData() {
@@ -62,6 +64,23 @@ export function createDebtFormSubmit(groupName, usernameFrom,
 		})
 			.then(response => {
 				dispatch(receiveCreateDebtSubmit(response.data, groupName));
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	}
+}
+
+export function addToGroupFormSubmit(groupName, userToAdd) {
+	return dispatch => {
+		dispatch(requestAddToGroupSubmit());
+
+		return axios.post('api/group/addtogroup', {
+			GroupName: groupName,
+			Username: userToAdd
+		})
+			.then(response => {
+				dispatch(receiveAddToGroupSubmit(response.data, groupName));
 			})
 			.catch(error => {
 				console.log(error);
