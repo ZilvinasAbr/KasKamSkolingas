@@ -5,9 +5,13 @@ import { oldReducer } from './oldReducer';
 import { reducer as formReducer} from 'redux-form';
 
 const reducers = {
-  homePage: homePage,
-  form: formReducer
+  homePage: homePage
 };
+
+// const reducers = {
+//   homePage: homePage,
+//   form: formReducer
+// };
 
 export default combineReducers(reducers);
 

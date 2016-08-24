@@ -22,6 +22,12 @@ function receiveHomePageData(state, json) {
 }
 
 function changeGroupViewTo(state, groupIndex, view) {
+  let group = Object.assign({}, state.groups[groupIndex], { view });
+  // let newGroups = Object.assign({}, state.groups);
+  // newGroups[groupIndex].view = view;
+  //
+  // return Object.assign({}, state, { groups: newGroups });
+
   let newState = Object.assign({}, state);
   newState.groups[groupIndex].view = view;
 

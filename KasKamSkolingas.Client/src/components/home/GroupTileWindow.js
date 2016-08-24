@@ -2,6 +2,7 @@ import React from 'react';
 import Default from './Default';
 import Settings from './Settings';
 import CreateDebtForm from './CreateDebtForm';
+import ViewDebts from './ViewDebts';
 
 const GroupTileWindow = (props) => {
   const renderView = (view, inDebt, debtTo) => {
@@ -32,9 +33,9 @@ const GroupTileWindow = (props) => {
         );
       case 'viewDebts':
         return (
-          <div>
-            ViewDebts
-          </div>
+          <ViewDebts
+            debts={props.debts}
+          />
         );
       case 'addToGroup':
         return (

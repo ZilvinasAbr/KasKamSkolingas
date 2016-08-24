@@ -8,14 +8,19 @@ import HomePage from './components/home/HomePage';
 
 const initialState = {};
 
-const store = createStore(reducer,
+const store = createStore(reducer, initialState, compose(
+	applyMiddleware(thunkMiddleware),
+	typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
+));
+
+/*const store = createStore(reducer,
   initialState,
   compose(
     applyMiddleware(
       thunkMiddleware
     ),
     typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : (f) => f
-));
+));*/
 
 class App extends React.Component {
 	constructor(props) {
