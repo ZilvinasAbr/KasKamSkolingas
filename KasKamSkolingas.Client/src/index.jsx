@@ -5,8 +5,10 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers/index';
 import HomePage from './components/home/HomePage';
+import LandingPage from './components/landing/LandingPage';
 
 const initialState = {
+	landingPage: {},
 	homePage: {},
 	form: {}
 };
@@ -33,7 +35,8 @@ class App extends React.Component {
 	render() {
 	  return (
 			<div>
-				<HomePage />
+				{/*<HomePage />*/}
+				<LandingPage />
 			</div>
 	  );
 	}
