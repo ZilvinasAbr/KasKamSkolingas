@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { isLoggedIn } from '../../actions/landingActions';
+import { isLoggedIn } from '../../actions/commonActions';
 // import { fetchHomePageData } from '../../actions';
 import {
-} from '../../actionCreators/landingActionCreators';
+} from '../../actionCreators/commonActionCreators';
 import { push } from 'react-router-redux';
 
 import { Link } from 'react-router';

@@ -16,6 +16,10 @@ import {
   GROUP_MAIN_BUTTON_PRESSED
 } from '../action_creators';
 
+import {
+  LOG_OFF
+} from '../actionCreators/homeActionCreators';
+
 export const initialState = {};
 
 function requestHomePageData(state) {
@@ -140,6 +144,10 @@ function groupMainButtonPressed(state, groupIndex) {
   }
 }
 
+function logOff(state) {
+  return state;
+}
+
 export function homePage(state = initialState, action) {
   switch (action.type) {
     case REQUEST_HOME_PAGE_DATA:
@@ -172,6 +180,8 @@ export function homePage(state = initialState, action) {
       return receiveAddToGroupSubmit(state, action.success, action.groupName);
     case GROUP_MAIN_BUTTON_PRESSED:
       return groupMainButtonPressed(state, action.groupIndex);
+    case LOG_OFF:
+      return logOff(state);
     default:
       return state;
   }

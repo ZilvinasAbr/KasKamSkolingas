@@ -1,10 +1,3 @@
-export const TEST = 'TEST';
-export function test() {
-  return {
-    type: TEST
-  };
-}
-
 export const REQUEST_IS_LOGGED_IN = 'REQUEST_IS_LOGGED_IN';
 export function requestIsLoggedIn() {
   return {
@@ -19,4 +12,3 @@ export function receiveIsLoggedIn(success) {
     success
   }
 }
-

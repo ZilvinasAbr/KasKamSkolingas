@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchHomePageData } from '../../actions';
+import { isLoggedIn } from '../../actions/commonActions';
 import { 
   changeGroupViewToSettings,
   changeGroupViewToDefault,
@@ -12,7 +13,11 @@ import {
   viewPreviousDebt,
   groupMainButtonPressed
 } from '../../action_creators';
+import {
+  logOff
+} from '../../actions/homeActions';
 import GroupTile from './GroupTile';
+
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -20,8 +25,9 @@ class HomePage extends React.Component {
   }
   
   componentDidMount() {
-    console.log('componentDidMount');
-    this.props.loadHomePageData();
+    // When the component mounts, check if user is logged in.
+    // If he is, load homepage data, otherwise redirect to landing page
+    this.props.isLoggedIn();
   }
 
   renderGroupTiles(groups = []) {
@@ -55,7 +61,8 @@ class HomePage extends React.Component {
     return (
       <div>
         <button onClick={this.props.loadHomePageData}>Refresh</button>
-        ZAAAAMBAAA
+        Groups
+        <button onClick={this.props.logOff}>Log off</button>
         {this.renderGroupTiles(groups)}
       </div>
     );
@@ -99,6 +106,12 @@ function mapDispatchToProps(dispatch) {
     },
     handleGroupMainButtonPress: groupIndex => {
       dispatch(groupMainButtonPressed(groupIndex));
+    },
+    logOff: () => {
+      dispatch(logOff());
+    },
+    isLoggedIn: () => {
+      dispatch(isLoggedIn());
     }
   }
 }

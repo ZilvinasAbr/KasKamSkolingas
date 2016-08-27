@@ -3,7 +3,8 @@ import { push } from 'react-router-redux';
 import {
   requestIsLoggedIn,
   receiveIsLoggedIn
-} from '../actionCreators/landingActionCreators';
+} from '../actionCreators/commonActionCreators';
+import { fetchHomePageData } from '../actions';
 
 export function isLoggedIn() {
   return dispatch => {
@@ -15,6 +16,9 @@ export function isLoggedIn() {
 
         if(response.data === true) {
           dispatch(push('/home'));
+          dispatch(fetchHomePageData());
+        }else {
+          dispatch(push('/'));
         }
       })
       .catch(error => {

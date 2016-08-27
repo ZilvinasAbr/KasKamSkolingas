@@ -2,12 +2,6 @@
   "name": "kaskamskolingas",
   "version": "0.0.0",
   "private": true,
-  "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ]
-  },
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "npm run test -- --watch",

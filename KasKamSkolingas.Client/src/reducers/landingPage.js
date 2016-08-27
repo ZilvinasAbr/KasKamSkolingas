@@ -1,7 +1,7 @@
 import {
   REQUEST_IS_LOGGED_IN,
   RECEIVE_IS_LOGGED_IN
-} from '../actionCreators/landingActionCreators';
+} from '../actionCreators/commonActionCreators';
 
 export const initialState = {};
 
