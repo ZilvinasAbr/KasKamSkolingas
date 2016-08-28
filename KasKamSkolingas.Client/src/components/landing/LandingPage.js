@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { isLoggedIn } from '../../actions/commonActions';
-// import { fetchHomePageData } from '../../actions';
 import {
 } from '../../actionCreators/commonActionCreators';
-import { push } from 'react-router-redux';
-
-import { Link } from 'react-router';
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
 class LandingPage extends React.Component {
   constructor(props) {
@@ -22,10 +20,10 @@ class LandingPage extends React.Component {
   render() {
     return (
       <div>
-        <button>Login</button>
-        <button>Register</button>
-        <Link to="/home">Home</Link>
-        <button onClick={this.props.test}>Home with dispatch push</button>
+        Login form:
+        <LoginForm />
+        Register form:
+        <RegisterForm />
       </div>
     );
   }
@@ -41,9 +39,6 @@ function mapDispatchToProps(dispatch) {
   return {
     isLoggedIn: () => {
       dispatch(isLoggedIn());
-    },
-    test: () => {
-      dispatch(push('/home'));
     }
   }
 }

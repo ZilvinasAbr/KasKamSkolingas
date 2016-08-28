@@ -145,7 +145,7 @@ function groupMainButtonPressed(state, groupIndex) {
 }
 
 function logOff(state) {
-  return state;
+  return {};
 }
 
 export function homePage(state = initialState, action) {
