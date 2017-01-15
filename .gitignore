@@ -3,3 +3,4 @@ KasKamSkolingas.Client/node_modules
 KasKamSkolingas.Server/Migrations/
 KasKamSkolingas.Server/wwwroot/bundle.js
 KasKamSkolingas.Client/.idea/
+debug.log

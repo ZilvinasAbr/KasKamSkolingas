@@ -6,16 +6,14 @@ const auth = require('./auth.js')();
 const users = require('./users.js');
 const cfg = require('./config.js');
 
+const apiRoutes = require('./routes');
+
 const app = express();
 
+app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(auth.initialize());
-
-app.get('/', (req, res) => {
-  res.json({
-    status: 'My API is alive!',
-  });
-});
+app.use('/api', apiRoutes);
 
 app.get('/user', auth.authenticate(), (req, res) => {
   res.json(users[req.user.id]);
