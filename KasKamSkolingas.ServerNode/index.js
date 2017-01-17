@@ -13,7 +13,7 @@ const app = express();
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(auth.initialize());
-app.use('/api', apiRoutes);
+apiRoutes(app);
 
 app.get('/user', auth.authenticate(), (req, res) => {
   res.json(users[req.user.id]);
