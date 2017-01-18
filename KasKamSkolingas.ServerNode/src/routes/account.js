@@ -6,52 +6,47 @@ const { dbConnectionUrl } = require('../config');
 
 const router = express.Router();
 
-function findUsers(userName, db) {
+async function findUsers(userName, db) {
   const collection = db.collection('users');
   return collection.find({ userName }).toArray();
 }
 
-function insertUser(user, db) {
+async function insertUser(user, db) {
   const collection = db.collection('users');
   return collection.insertOne(user);
 }
 
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
   const { userName, password, confirmPassword } = req.body;
+
   if (password !== confirmPassword) {
     res.send(false);
     return;
   }
 
-  MongoClient.connect(dbConnectionUrl)
-    .then((db) => {
-      findUsers(userName, db)
-        .then((usersFound) => {
-          if (usersFound.length > 0) {
-            res.send(false);
-            db.close();
-            return Promise.resolve(true);
-          } else {
-            const encryptedPassword = bcrypt.hashSync(password);
-            const newUser = {
-              userName,
-              password: encryptedPassword
-            };
+  try {
+    const db = await MongoClient.connect(dbConnectionUrl);
 
-            return insertUser(newUser, db);
-          }
-        })
-        .then(() => {
-          console.log('Inserted user');
-          res.send(true);
-          db.close();
-        })
-        .catch((err) => {
-          console.error(err);
-          db.close();
-        });
-    })
-    .catch(err => console.error(err));
+    const usersFound = await findUsers(userName, db);
+
+    if (usersFound.length > 0) {
+      res.send(false);
+      db.close();
+      return;
+    }
+
+    const encryptedPassword = bcrypt.hashSync(password);
+    const newUser = {
+      userName,
+      password: encryptedPassword
+    };
+
+    await insertUser(newUser, db);
+    res.send(true);
+    db.close();
+  } catch (error) {
+    res.send(false);
+  }
 });
 
 module.exports = router;
