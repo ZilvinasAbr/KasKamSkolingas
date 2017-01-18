@@ -2,9 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jwt-simple');
 
-const auth = require('./auth.js')();
-const users = require('./users.js');
-const cfg = require('./config.js');
+const auth = require('./auth')();
+const users = require('./users');
+const cfg = require('./config');
 
 const apiRoutes = require('./routes');
 
