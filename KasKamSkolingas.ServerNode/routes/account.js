@@ -7,6 +7,23 @@ const { dbConnectionUrl } = require('../config');
 
 const router = express.Router();
 
+function findUsers(clause, db, callback) {
+  const collection = db.collection('users');
+  collection
+    .find(clause)
+    .toArray((err, docs) => {
+      assert.equal(err, null);
+      callback(docs);
+    });
+}
+
+function insertUser(user, db, callback) {
+  const collection = db.collection('users');
+  collection.insertOne(user)
+    .then(result => callback(result, null))
+    .catch(err => callback(null, err));
+}
+
 router.post('/register', (req, res) => {
   MongoClient.connect(dbConnectionUrl, (err, db) => {
     assert.equal(null, err);
@@ -19,18 +36,25 @@ router.post('/register', (req, res) => {
       return;
     }
 
-    const encryptedPassword = bcrypt.hashSync(password);
+    findUsers({ userName }, db, (docs) => {
+      if (docs.length > 0) {
+        res.send(false);
+        db.close();
+      }
 
-    db.collection('users').insertOne({
-      userName,
-      password: encryptedPassword
-    })
-    .then((result) => {
-      console.log('Inserted user into users collection');
-      db.close();
-      res.send(true);
-    })
-    .catch(err2 => console.error(err2));
+      const encryptedPassword = bcrypt.hashSync(password);
+      const user = {
+        userName,
+        password: encryptedPassword
+      };
+
+      insertUser(user, db, (result, err2) => {
+        assert.equal(err2, null);
+
+        res.send(true);
+        db.close();
+      });
+    });
   });
 });
 
