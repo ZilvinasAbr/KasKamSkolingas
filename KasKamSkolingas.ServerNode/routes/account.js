@@ -40,20 +40,20 @@ router.post('/register', (req, res) => {
       if (docs.length > 0) {
         res.send(false);
         db.close();
+      } else {
+        const encryptedPassword = bcrypt.hashSync(password);
+        const user = {
+          userName,
+          password: encryptedPassword
+        };
+
+        insertUser(user, db, (result, err2) => {
+          assert.equal(err2, null);
+
+          res.send(true);
+          db.close();
+        });
       }
-
-      const encryptedPassword = bcrypt.hashSync(password);
-      const user = {
-        userName,
-        password: encryptedPassword
-      };
-
-      insertUser(user, db, (result, err2) => {
-        assert.equal(err2, null);
-
-        res.send(true);
-        db.close();
-      });
     });
   });
 });
