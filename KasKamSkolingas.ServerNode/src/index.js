@@ -3,9 +3,9 @@ const bodyParser = require('body-parser');
 const jwt = require('jwt-simple');
 
 const auth = require('./auth')();
-const users = require('./users');
 const cfg = require('./config');
-
+const { MongoClient } = require('mongodb');
+const { findUsers, authorize } = require('./mongodbMethods/user');
 const apiRoutes = require('./routes');
 
 const app = express();
@@ -15,19 +15,39 @@ app.use(bodyParser.json());
 app.use(auth.initialize());
 apiRoutes(app);
 
-app.get('/user', auth.authenticate(), (req, res) => {
-  res.json(users[req.user.id]);
+app.get('/user', auth.authenticate(), async (req, res) => {
+  try {
+    const db = await MongoClient.connect(cfg.dbConnectionUrl);
+
+    const users = await findUsers(req.user.userName, db);
+    res.json(users[0]);
+    db.close();
+  } catch (err) {
+    const errorMessage = 'Could not connect to MongoDb on GET \'/user\'';
+    console.error(errorMessage);
+    res.sendStatus(500);
+  }
 });
 
-app.post('/token', (req, res) => {
-  if (req.body.email && req.body.password) {
-    const email = req.body.email;
+app.post('/token', async (req, res) => {
+  if (req.body.userName && req.body.password) {
+    const userName = req.body.userName;
     const password = req.body.password;
-    const user = users.find(u =>
-      u.email === email && u.password === password);
-    if (user) {
+
+    let isAuthorized = false;
+
+    try {
+      const db = await MongoClient.connect(cfg.dbConnectionUrl);
+      isAuthorized = await authorize(userName, password, db);
+      db.close();
+    } catch (err) {
+      console.log('line 42 index.js');
+      console.error(err);
+    }
+
+    if (isAuthorized) {
       const payload = {
-        id: user.id
+        userName
       };
       const token = jwt.encode(payload, cfg.jwtSecret);
       res.json({

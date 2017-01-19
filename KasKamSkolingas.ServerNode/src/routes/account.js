@@ -1,20 +1,10 @@
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
-const bcrypt = require('bcrypt-nodejs');
 
-const { dbConnectionUrl } = require('../config');
+const cfg = require('../config');
+const { register, passwordSignIn } = require('../services/signInManager');
 
 const router = express.Router();
-
-async function findUsers(userName, db) {
-  const collection = db.collection('users');
-  return collection.find({ userName }).toArray();
-}
-
-async function insertUser(user, db) {
-  const collection = db.collection('users');
-  return collection.insertOne(user);
-}
 
 router.post('/register', async (req, res) => {
   const { userName, password, confirmPassword } = req.body;
@@ -24,28 +14,42 @@ router.post('/register', async (req, res) => {
     return;
   }
 
+  let token;
+
   try {
-    const db = await MongoClient.connect(dbConnectionUrl);
-
-    const usersFound = await findUsers(userName, db);
-
-    if (usersFound.length > 0) {
-      res.send(false);
-      db.close();
-      return;
-    }
-
-    const encryptedPassword = bcrypt.hashSync(password);
-    const newUser = {
-      userName,
-      password: encryptedPassword
-    };
-
-    await insertUser(newUser, db);
-    res.send(true);
+    const db = await MongoClient.connect(cfg.dbConnectionUrl);
+    token = await register(userName, password, db);
     db.close();
-  } catch (error) {
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+
+  if (token) {
+    res.send(token);
+  } else {
     res.send(false);
+  }
+});
+
+router.post('/login', async (req, res) => {
+  const { userName, password } = req.body;
+
+  let token;
+
+  try {
+    const db = await MongoClient.connect(cfg.dbConnectionUrl);
+    token = await passwordSignIn(userName, password, db);
+    db.close();
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+
+  if (token) {
+    res.send(token);
+  } else {
+    res.sendStatus(400);
   }
 });
 

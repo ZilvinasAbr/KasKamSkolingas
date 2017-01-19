@@ -1,7 +1,9 @@
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
-const users = require('./users.js');
-const cfg = require('./config.js');
+
+const cfg = require('./config');
+const { MongoClient } = require('mongodb');
+const { findUsers } = require('./mongodbMethods/user');
 
 const ExtractJwt = passportJWT.ExtractJwt;
 const Strategy = passportJWT.Strategy;
@@ -11,11 +13,23 @@ const params = {
 };
 
 module.exports = () => {
-  const strategy = new Strategy(params, (payload, done) => {
-    const user = users[payload.id] || null;
+  const strategy = new Strategy(params, async (payload, done) => {
+    let user;
+
+    try {
+      const db = await MongoClient.connect(cfg.dbConnectionUrl);
+
+      const users = await findUsers(payload.userName, db);
+      user = users[0] || null;
+      db.close();
+    } catch (err) {
+      console.log('auth.js error');
+      console.error(err);
+    }
+
     if (user) {
       return done(null, {
-        id: user.id
+        userName: user.userName
       });
     }
 
