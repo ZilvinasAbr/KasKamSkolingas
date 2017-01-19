@@ -19,4 +19,9 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js'
   },
+  devtool: 'source-map',
+  devServer: {
+    inline: true,
+    contentBase: '../KasKamSkolingas.ServerNode/public'
+  }
 };

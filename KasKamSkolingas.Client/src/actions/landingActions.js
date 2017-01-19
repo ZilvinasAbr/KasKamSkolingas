@@ -20,18 +20,18 @@ export function login(username, password) {
   }
 }
 
-export function register(username, password, confirm) {
+export function register(username, password, confirmPassword) {
   return dispatch => {
     return axios.post('api/account/register', {
-      UserName: username,
-      Password: password,
-      ConfirmPassword: confirm
+      username,
+      password,
+      confirmPassword
     })
       .then(response => {
         if(response.data === true) {
           dispatch(push('/home'));
         }else {
-
+          console.error('Couldn\'t register');
         }
       })
       .catch(error => {
