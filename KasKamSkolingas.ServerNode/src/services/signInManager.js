@@ -1,13 +1,13 @@
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jwt-simple');
 
-const { findUsers, insertUser } = require('../mongodbMethods/user');
 const { jwtSecret } = require('../config');
 
 async function register(userName, password, db) {
-  const usersFound = await findUsers(userName, db);
+  const userFound = await db.collection('users')
+    .findOne({ userName });
 
-  if (usersFound.length > 0) {
+  if (userFound) {
     return Promise.resolve(false);
   }
 
@@ -17,7 +17,7 @@ async function register(userName, password, db) {
     password: encryptedPassword
   };
 
-  await insertUser(newUser, db);
+  await db.collection('users').insertOne(newUser);
 
   const payload = {
     userName

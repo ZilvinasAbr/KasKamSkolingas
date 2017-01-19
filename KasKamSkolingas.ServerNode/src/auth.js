@@ -3,7 +3,6 @@ const passportJWT = require('passport-jwt');
 
 const cfg = require('./config');
 const { MongoClient } = require('mongodb');
-const { findUsers } = require('./mongodbMethods/user');
 
 const ExtractJwt = passportJWT.ExtractJwt;
 const Strategy = passportJWT.Strategy;
@@ -19,8 +18,9 @@ module.exports = () => {
     try {
       const db = await MongoClient.connect(cfg.dbConnectionUrl);
 
-      const users = await findUsers(payload.userName, db);
-      user = users[0] || null;
+      user = await db.collection('users')
+        .findOne({ userName: payload.userName });
+
       db.close();
     } catch (err) {
       console.log('auth.js error');
