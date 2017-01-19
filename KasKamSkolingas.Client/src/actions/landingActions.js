@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
 
-export function login(username, password) {
+export function login(usern=Name, password) {
   return dispatch => {
     return axios.post('api/account/login', {
-      UserName: username,
-      Password: password
+      userName,
+      password
     })
       .then(response => {
         if(response.data === true) {
@@ -20,18 +20,21 @@ export function login(username, password) {
   }
 }
 
-export function register(username, password, confirmPassword) {
+export function register(userName, password, confirmPassword) {
   return dispatch => {
     return axios.post('api/account/register', {
-      username,
+      userName,
       password,
       confirmPassword
     })
       .then(response => {
-        if(response.data === true) {
-          dispatch(push('/home'));
-        }else {
+        const token = response.data;
+
+        if(!token) {
           console.error('Couldn\'t register');
+        } else {
+          console.log(token);
+          dispatch(push('/home'));
         }
       })
       .catch(error => {
