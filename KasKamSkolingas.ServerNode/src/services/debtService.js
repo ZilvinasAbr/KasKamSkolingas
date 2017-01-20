@@ -121,7 +121,31 @@ async function endDebt(userName, debtId) {
 
 async function getGroupDebts(groupName, userName) {
   try {
+    const db = await MongoClient.connect(cfg.dbConnectionUrl);
 
+    let userFound = db.collection('users')
+      .findOne({ userName });
+
+    let groupFound = db.collection('groups')
+      .findOne({ name: groupName });
+
+    let userGroupFound = db.collection('userGroups')
+      .findOne({ userName, groupName });
+
+    userFound = await userFound;
+    groupFound = await groupFound;
+    userGroupFound = await userGroupFound;
+
+    if (!userFound || !groupFound || !userGroupFound) {
+      return Promise.resolve(false);
+    }
+
+    const groupDebts = await db.collection('debts')
+      .find({ groupName, isDebtPaid: false })
+      .toArray();
+
+    db.close();
+    return Promise.resolve(groupDebts);
   } catch (err) {
     console.error(err);
     return Promise.reject(err);
