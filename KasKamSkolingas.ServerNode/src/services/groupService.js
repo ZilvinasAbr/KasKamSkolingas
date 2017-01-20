@@ -66,33 +66,70 @@ async function addUserToGroup(userName, groupName, userNameToAdd) {
 }
 
 async function leaveGroup(userName, groupName) {
-  const db = await MongoClient.connect(cfg.dbConnectionUrl);
+  try {
+    const db = await MongoClient.connect(cfg.dbConnectionUrl);
 
-  let userFound = db.collection('users')
-    .findOne({ userName });
-  let groupFound = db.collection('groups')
-    .findOne({ name: groupName });
-  let userGroupFound = db.collection('userGroups')
-    .findOne({ userName, groupName });
-  let userGroupDebtFound = db.collection('debts')
-    .findOne({});
+    let userFound = db.collection('users')
+      .findOne({ userName });
+    let groupFound = db.collection('groups')
+      .findOne({ name: groupName });
+    let userGroupFound = db.collection('userGroups')
+      .findOne({ userName, groupName });
+    let userGroupDebtFound = db.collection('debts')
+      .findOne({});
 
-  userFound = await userFound;
-  groupFound = await groupFound;
-  userGroupFound = await userGroupFound;
-  userGroupDebtFound = await userGroupDebtFound;
+    userFound = await userFound;
+    groupFound = await groupFound;
+    userGroupFound = await userGroupFound;
+    userGroupDebtFound = await userGroupDebtFound;
 
-  if (!userFound || !groupFound || !userGroupFound || userGroupDebtFound) {
-    return Promise.resolve(false);
+    if (!userFound || !groupFound || !userGroupFound || userGroupDebtFound) {
+      return Promise.resolve(false);
+    }
+
+    await db.collection('userGroups').remove({ userName, groupName });
+    db.close();
+
+    return Promise.resolve(true);
+  } catch (err) {
+    console.error(err);
+    return Promise.reject(err);
   }
-
-  await db.collection('userGroups').remove({ userName, groupName });
-
-  return Promise.resolve(true);
 }
 
 async function getGroupData(userName, groupName) {
-  throw 'NotImplemented';
+  try {
+    const db = await MongoClient.connect(cfg.dbConnectionUrl);
+
+    let userFound = db.collection('users')
+      .findOne({ userName });
+    let groupFound = db.collection('groups')
+      .findOne({ name: groupName });
+    let userGroupFound = db.collection('userGroups')
+      .findOne({ userName, groupName });
+
+    userFound = await userFound;
+    groupFound = await groupFound;
+    userGroupFound = await userGroupFound;
+
+    if (!userFound || !groupFound || !userGroupFound) {
+      return Promise.resolve(null);
+    }
+
+    const users = await db.collection('userGroups')
+      .find({ groupName })
+      .toArray();
+    const userNames = users.map((user => user.userName));
+
+    db.close();
+    return Promise.resolve({
+      users: userNames,
+      debts: null
+    });
+  } catch (err) {
+    console.error(err);
+    return Promise.reject(err);
+  }
 }
 
 module.exports = {

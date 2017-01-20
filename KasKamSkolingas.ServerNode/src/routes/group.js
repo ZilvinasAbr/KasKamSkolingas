@@ -53,7 +53,7 @@ router.post('/leave', auth.authenticate(), async (req, res) => {
   }
 });
 
-router.post('getGroupData', async (req, res) => {
+router.post('/getGroupData', auth.authenticate(), async (req, res) => {
   try {
     const { userName } = req.user;
     const { groupName } = req.body;
