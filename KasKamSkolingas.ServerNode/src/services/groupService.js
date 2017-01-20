@@ -65,7 +65,39 @@ async function addUserToGroup(userName, groupName, userNameToAdd) {
   }
 }
 
+async function leaveGroup(userName, groupName) {
+  const db = await MongoClient.connect(cfg.dbConnectionUrl);
+
+  let userFound = db.collection('users')
+    .findOne({ userName });
+  let groupFound = db.collection('groups')
+    .findOne({ name: groupName });
+  let userGroupFound = db.collection('userGroups')
+    .findOne({ userName, groupName });
+  let userGroupDebtFound = db.collection('debts')
+    .findOne({});
+
+  userFound = await userFound;
+  groupFound = await groupFound;
+  userGroupFound = await userGroupFound;
+  userGroupDebtFound = await userGroupDebtFound;
+
+  if (!userFound || !groupFound || !userGroupFound || userGroupDebtFound) {
+    return Promise.resolve(false);
+  }
+
+  await db.collection('userGroups').remove({ userName, groupName });
+
+  return Promise.resolve(true);
+}
+
+async function getGroupData(userName, groupName) {
+  throw 'NotImplemented';
+}
+
 module.exports = {
   createGroup,
-  addUserToGroup
+  addUserToGroup,
+  leaveGroup,
+  getGroupData
 };
