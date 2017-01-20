@@ -45,7 +45,8 @@ async function createDebt({
       whatFor,
       userNameFrom,
       userNameTo,
-      groupName
+      groupName,
+      isDebtPaid: false
     };
 
     await db.collection('debts').insertOne(newDebt);

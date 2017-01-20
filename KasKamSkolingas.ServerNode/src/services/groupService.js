@@ -76,7 +76,13 @@ async function leaveGroup(userName, groupName) {
     let userGroupFound = db.collection('userGroups')
       .findOne({ userName, groupName });
     let userGroupDebtFound = db.collection('debts')
-      .findOne({});
+      .findOne({
+        groupName,
+        $or: [
+          { userNameTo: userName },
+          { userNameFrom: userName }
+        ]
+      });
 
     userFound = await userFound;
     groupFound = await groupFound;
@@ -121,10 +127,17 @@ async function getGroupData(userName, groupName) {
       .toArray();
     const userNames = users.map((user => user.userName));
 
+    const debts = await db.collection('debts')
+      .find({
+        groupName,
+        isDebtPaid: false
+      })
+      .toArray();
+
     db.close();
     return Promise.resolve({
       users: userNames,
-      debts: null
+      debts
     });
   } catch (err) {
     console.error(err);
