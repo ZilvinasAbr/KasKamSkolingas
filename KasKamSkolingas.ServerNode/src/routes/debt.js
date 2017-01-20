@@ -3,7 +3,8 @@ const express = require('express');
 const auth = require('../auth')();
 const {
   createDebt,
-  deleteDebt
+  deleteDebt,
+  endDebt
 } = require('../services/debtService');
 
 const router = express.Router();
@@ -35,6 +36,20 @@ router.delete('/:id', auth.authenticate(), async (req, res) => {
     const debtId = req.params.id;
 
     const result = await deleteDebt(userName, debtId);
+
+    res.send(result);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+router.put('/end', auth.authenticate(), async (req, res) => {
+  try {
+    const { userName } = req.user;
+    const { debtId } = req.body;
+
+    const result = await endDebt(userName, debtId);
 
     res.send(result);
   } catch (err) {

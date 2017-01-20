@@ -86,7 +86,41 @@ async function deleteDebt(userName, debtId) {
   }
 }
 
+async function endDebt(userName, debtId) {
+  try {
+    const db = await MongoClient.connect(cfg.dbConnectionUrl);
+
+    let userFound = db.collection('users')
+      .findOne({ userName });
+    let debtFound = db.collection('debts')
+      .findOne({ _id: ObjectID(debtId), userNameTo: userName });
+
+    userFound = await userFound;
+    debtFound = await debtFound;
+
+    if (!userFound || !debtFound) {
+      return Promise.resolve(false);
+    }
+
+    await db.collection('debts').update(
+      { _id: ObjectID(debtId) },
+      {
+        $set: {
+          isDebtPaid: true
+        }
+      }
+    );
+
+    db.close();
+    return Promise.resolve(true);
+  } catch (err) {
+    console.error(err);
+    return Promise.reject(err);
+  }
+}
+
 module.exports = {
   createDebt,
-  deleteDebt
+  deleteDebt,
+  endDebt
 };
