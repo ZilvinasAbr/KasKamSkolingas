@@ -4,7 +4,9 @@ const auth = require('../auth')();
 const {
   createDebt,
   deleteDebt,
-  endDebt
+  endDebt,
+  getGroupDebts,
+  getUserDebts
 } = require('../services/debtService');
 
 const router = express.Router();
@@ -58,8 +60,32 @@ router.put('/end', auth.authenticate(), async (req, res) => {
   }
 });
 
-router.get('/', (req, res) => {
-  res.send('Debt index');
+router.get('/userDebts', auth.authenticate(), async (req, res) => {
+  try {
+    const { userName } = req.user;
+
+    const result = await getUserDebts(userName);
+
+    res.send(result);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+router.post('/groupDebts', auth.authenticate(), async (req, res) => {
+  try {
+    const { userName } = req.user;
+
+    const { groupName } = req.body;
+
+    const result = await getGroupDebts(groupName, userName);
+
+    res.send(result);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 });
 
 module.exports = router;

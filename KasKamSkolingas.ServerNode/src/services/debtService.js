@@ -119,8 +119,57 @@ async function endDebt(userName, debtId) {
   }
 }
 
+async function getGroupDebts(groupName, userName) {
+  try {
+
+  } catch (err) {
+    console.error(err);
+    return Promise.reject(err);
+  }
+}
+
+async function getUserDebts(userName) {
+  try {
+    const db = await MongoClient.connect(cfg.dbConnectionUrl);
+
+    const userFound = await db.collection('users')
+      .findOne({ userName });
+
+    if (!userFound) {
+      return Promise.resolve(null);
+    }
+
+    let userDebts = await db.collection('debts').find(
+      {
+        isDebtPaid: false,
+        $or: [
+          {
+            userNameFrom: userName
+          },
+          {
+            userNameTo: userName
+          }
+        ]
+      }
+    )
+    .toArray();
+
+    userDebts = userDebts.map(debt =>
+      Object.assign({}, debt, { isUserInDebt: debt.userNameFrom === userName }));
+
+    db.close();
+
+    return Promise.resolve(userDebts);
+  } catch (err) {
+    console.error(err);
+    return Promise.reject(err);
+  }
+}
+
 module.exports = {
   createDebt,
   deleteDebt,
-  endDebt
+  endDebt,
+  getGroupDebts,
+  getUserDebts
 };
