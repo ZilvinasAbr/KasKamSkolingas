@@ -72,7 +72,9 @@ async function getHomePageData(userName) {
     }
 
     if (userGroupsFound.length <= 0) {
-      return Promise.resolve([]);
+      return Promise.resolve({
+        groups: []
+      });
     }
 
     const groups = userGroupsFound.map(ug => ug.groupName);

@@ -8,7 +8,6 @@ import { fetchHomePageData } from '../actions';
 
 export function isLoggedIn() {
   return dispatch => {
-    debugger;
     const token = window.localStorage.getItem('token');
 
     if (token) {
