@@ -39,14 +39,8 @@ async function getHomePageGroupsData(userName, groupNames, db) {
 
     const groupedGroupDebts = _.groupBy(groupsDebts, 'groupName');
 
-    const result = [];
-
-    for (const groupName in groupedGroupDebts) {
-      const formattedGroupData = getHomePageGroupData(
-        userName, groupName, groupedGroupDebts[groupName]
-      );
-      result.push(formattedGroupData);
-    }
+    const result = Object.keys(groupedGroupDebts).map(groupName =>
+      getHomePageGroupData(userName, groupName, groupedGroupDebts[groupName]));
 
     return Promise.resolve(result);
   } catch (err) {
