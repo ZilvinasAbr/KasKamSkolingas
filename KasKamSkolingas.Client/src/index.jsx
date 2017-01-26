@@ -29,7 +29,7 @@ render(
 			{ /* Tell the Router to use our enhanced history */}
 			<Router history={history}>
 				<Route path="/" component={LandingPage} />
-				<Route path="home" component={HomePage} />
+				<Route path="/home" component={HomePage} />
 			</Router>
 		</Provider>
 	),

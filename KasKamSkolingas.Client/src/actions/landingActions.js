@@ -1,17 +1,20 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
 
-export function login(usern=Name, password) {
+export function login(userName, password) {
   return dispatch => {
     return axios.post('api/account/login', {
       userName,
       password
     })
       .then(response => {
-        if(response.data === true) {
+        const token = response.data;
+
+        if (token) {
+          window.localStorage.setItem('token', token);
           dispatch(push('/home'));
-        }else {
-          
+        } else {
+          console.log('Couldn\'t login');
         }
       })
       .catch(error => {
@@ -30,11 +33,11 @@ export function register(userName, password, confirmPassword) {
       .then(response => {
         const token = response.data;
 
-        if(!token) {
-          console.error('Couldn\'t register');
-        } else {
-          console.log(token);
+        if (token) {
+          window.localStorage.setItem('token', token);
           dispatch(push('/home'));
+        } else {
+          console.error('Couldn\'t register');
         }
       })
       .catch(error => {

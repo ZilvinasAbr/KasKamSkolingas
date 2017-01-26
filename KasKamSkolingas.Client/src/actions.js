@@ -43,7 +43,11 @@ export function fetchHomePageData() {
 	return dispatch => {
 		dispatch(requestHomePageData());
 
-		return axios.get('api/account/homepagedata')
+		const token = window.localStorage.getItem('token');
+
+		return axios.get('api/account/homepagedata', {
+			headers: { Authorization: `JWT ${token}` }
+		})
 			.then(response => {
 				dispatch(receiveHomePageData(response.data))
 			})
@@ -75,9 +79,13 @@ export function addToGroupFormSubmit(groupName, userToAdd) {
 	return dispatch => {
 		dispatch(requestAddToGroupSubmit());
 
+		const token = window.localStorage.getItem('token');
+
 		return axios.post('api/group/addtogroup', {
 			GroupName: groupName,
 			Username: userToAdd
+		}, {
+			headers: { Authorization: `JWT ${token}` }
 		})
 			.then(response => {
 				dispatch(receiveAddToGroupSubmit(response.data, groupName));

@@ -8,21 +8,26 @@ import { fetchHomePageData } from '../actions';
 
 export function isLoggedIn() {
   return dispatch => {
-    dispatch(requestIsLoggedIn());
+    debugger;
+    const token = window.localStorage.getItem('token');
 
-    return axios.get('/api/account/issignedin')
+    if (token) {
+      axios.get('/api/account/isSignedIn', {
+        headers: { Authorization: `JWT ${token}` }
+      })
       .then(response => {
-        dispatch(receiveIsLoggedIn(response.data));
-
-        if(response.data === true) {
+        if (response.data === true) {
           dispatch(push('/home'));
           dispatch(fetchHomePageData());
-        }else {
-          dispatch(push('/'));
         }
       })
       .catch(error => {
         console.log(error);
-      });
+        dispatch(push('/'));
+      })
+    } else {
+      dispatch(push('/'));
+    }
   }
 }
+

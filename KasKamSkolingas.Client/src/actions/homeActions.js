@@ -6,15 +6,9 @@ import { push } from 'react-router-redux';
 
 export function logOff() {
   return dispatch => {
-    return axios.post('/api/account/logoff')
-      .then(response => {
-        if(response.data === true) {
-          dispatch(logOffActionCreator());
-          dispatch(push('/'));
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  };
+    window.localStorage.setItem('token', null);
+    dispatch(logOffActionCreator());
+    dispatch(push('/'));
+  }
 }
+
