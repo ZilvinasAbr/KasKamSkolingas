@@ -1,8 +1,10 @@
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 
+const auth = require('../auth')();
 const cfg = require('../config');
 const { register, passwordSignIn } = require('../services/signInManager');
+const { getHomePageData } = require('../services/accountService');
 
 const router = express.Router();
 
@@ -50,6 +52,23 @@ router.post('/login', async (req, res) => {
     res.send(token);
   } else {
     res.sendStatus(400);
+  }
+});
+
+router.get('/isSignedIn', auth.authenticate(), (req, res) => {
+  res.send(true);
+});
+
+router.get('/homePageData', auth.authenticate(), async (req, res) => {
+  try {
+    const { userName } = req.user;
+
+    const result = await getHomePageData(userName);
+
+    res.send(result);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
   }
 });
 
