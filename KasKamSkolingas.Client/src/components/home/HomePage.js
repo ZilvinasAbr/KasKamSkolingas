@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { fetchHomePageData } from '../../actions';
 import { isLoggedIn } from '../../actions/commonActions';
 import { 
@@ -14,9 +15,11 @@ import {
   groupMainButtonPressed
 } from '../../action_creators';
 import {
-  logOff
+  logOff,
+  createGroup
 } from '../../actions/homeActions';
 import GroupTile from './GroupTile';
+import CreateGroup from './CreateGroup';
 
 
 class HomePage extends React.Component {
@@ -64,6 +67,9 @@ class HomePage extends React.Component {
         Groups
         <button onClick={this.props.logOff}>Log off</button>
         {this.renderGroupTiles(groups)}
+        <CreateGroup
+          createGroup={this.props.createGroup}
+        />
       </div>
     );
   }
@@ -112,6 +118,9 @@ function mapDispatchToProps(dispatch) {
     },
     isLoggedIn: () => {
       dispatch(isLoggedIn());
+    },
+    createGroup: (groupName) => {
+      dispatch(createGroup(groupName));
     }
   }
 }

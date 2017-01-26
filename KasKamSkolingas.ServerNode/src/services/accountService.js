@@ -1,5 +1,4 @@
 const { MongoClient } = require('mongodb');
-const _ = require('lodash');
 
 const cfg = require('../config');
 
@@ -37,10 +36,18 @@ async function getHomePageGroupsData(userName, groupNames, db) {
       })
       .toArray();
 
-    const groupedGroupDebts = _.groupBy(groupsDebts, 'groupName');
+    const groupedGroupDebts = groupNames.map(groupName => ({
+      groupName,
+      debts: groupsDebts.filter(groupDebt => groupDebt.groupName === groupName)
+    }));
 
-    const result = Object.keys(groupedGroupDebts).map(groupName =>
-      getHomePageGroupData(userName, groupName, groupedGroupDebts[groupName]));
+    // const groupedGroupDebts = _.groupBy(groupsDebts, 'groupName');
+
+    const result = groupedGroupDebts.map(group =>
+      getHomePageGroupData(userName, group.groupName, group.debts));
+
+    // const result = Object.keys(groupedGroupDebts).map(groupName =>
+    //   getHomePageGroupData(userName, groupName, groupedGroupDebts[groupName]));
 
     return Promise.resolve(result);
   } catch (err) {

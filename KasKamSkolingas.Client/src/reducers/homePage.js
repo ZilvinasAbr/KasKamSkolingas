@@ -17,7 +17,8 @@ import {
 } from '../action_creators';
 
 import {
-  LOG_OFF
+  LOG_OFF,
+  CREATE_GROUP
 } from '../actionCreators/homeActionCreators';
 
 export const initialState = {};
@@ -148,6 +149,20 @@ function logOff(state) {
   return {};
 }
 
+function createGroup(state, groupName) {
+  let nextGroups = state.groups.slice();
+  nextGroups.push({
+    name: groupName,
+    inDebt: 0,
+    debtTo: 0,
+    debts: [],
+    debtIndex: 0,
+    view: 'default'
+  });
+
+  return Object.assign({}, state, { groups: nextGroups });
+}
+
 export function homePage(state = initialState, action) {
   switch (action.type) {
     case REQUEST_HOME_PAGE_DATA:
@@ -182,6 +197,8 @@ export function homePage(state = initialState, action) {
       return groupMainButtonPressed(state, action.groupIndex);
     case LOG_OFF:
       return logOff(state);
+    case CREATE_GROUP:
+      return createGroup(state, action.groupName);
     default:
       return state;
   }

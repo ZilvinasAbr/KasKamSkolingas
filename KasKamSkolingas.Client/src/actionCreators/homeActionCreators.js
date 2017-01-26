@@ -5,3 +5,11 @@ export function logOff() {
     type: LOG_OFF
   }
 }
+
+export const CREATE_GROUP = 'CREATE_GROUP';
+export function createGroup(groupName) {
+  return {
+    type: CREATE_GROUP,
+    groupName
+  };
+}
