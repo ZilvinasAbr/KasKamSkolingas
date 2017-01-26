@@ -6,6 +6,7 @@ import AddToGroupForm from './AddToGroupForm';
 import ViewDebts from './ViewDebts';
 
 const GroupTileWindow = (props) => {
+  debugger;
   const renderView = (view, inDebt, debtTo) => {
     switch(view){
       case 'default':

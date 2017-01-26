@@ -1,8 +1,8 @@
 import {Map, fromJS} from 'immutable';
 import { combineReducers } from 'redux';
-import { homePage } from './homePage';
+import { homePage, initialState as homePageInitial } from './homePage';
 import { oldReducer } from './oldReducer';
-import { landingPage } from './landingPage';
+import { landingPage, initialState as landingPageInitial } from './landingPage';
 import { reducer as formReducer} from 'redux-form';
 import { routerReducer } from 'react-router-redux';
 
@@ -13,11 +13,14 @@ const reducers = {
   routing: routerReducer
 };
 
-export default combineReducers(reducers);
+const initialState = {
+  homePage: homePageInitial,
+  landingPage: landingPageInitial
+}
 
-/*export default combineReducers({
-  homePage,
-  oldReducer
-});*/
+const reducer = combineReducers(reducers);
 
-//export default homePage;
+export {
+  reducer,
+  initialState
+};

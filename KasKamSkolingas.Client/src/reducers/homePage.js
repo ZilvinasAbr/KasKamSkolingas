@@ -20,7 +20,9 @@ import {
   LOG_OFF
 } from '../actionCreators/homeActionCreators';
 
-export const initialState = {};
+export const initialState = {
+  groups: []
+};
 
 function requestHomePageData(state) {
   return Object.assign({}, state);
@@ -118,7 +120,7 @@ function receiveAddToGroupSubmit(state, success, groupName) {
 function groupMainButtonPressed(state, groupIndex) {
   const view = state.groups[groupIndex].view;
 
-  let nextState = Object.assign({}, state);
+  let nextState = Object.assign({}, state, { groups: state.groups.slice() });
 
   switch (view) {
     case 'default':
