@@ -1,23 +1,21 @@
 import React from 'react';
 
-const Settings = (props) => {
-  return (
+const Settings = props => (
+  <div>
     <div>
-      <div>
-        <button onClick={() => props.changeViewToCreateDebt(props.index)}>Create debt</button>
-      </div>
-      <div>
-        <button onClick={() => props.changeViewToViewDebts(props.index)}>View debts</button>
-      </div>
-      <div>
-        <button onClick={() => props.changeViewToAddToGroup(props.index)}>Add to group</button>
-      </div>
-      <div>
-        <button onClick={() => props.changeViewToLeaveGroup(props.index)}>Leave group</button>
-      </div>
+      <button onClick={() => props.changeViewToCreateDebt(props.index)}>Create debt</button>
     </div>
+    <div>
+      <button onClick={() => props.changeViewToViewDebts(props.index)}>View debts</button>
+    </div>
+    <div>
+      <button onClick={() => props.changeViewToAddToGroup(props.index)}>Add to group</button>
+    </div>
+    <div>
+      <button onClick={() => props.changeViewToLeaveGroup(props.index)}>Leave group</button>
+    </div>
+  </div>
   );
-};
 
 Settings.propTypes = {
   index: React.PropTypes.number.isRequired,

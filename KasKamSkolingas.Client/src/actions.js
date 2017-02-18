@@ -11,92 +11,91 @@ import {
 	receiveAddToGroupSubmit
 } from './action_creators';
 
-/*function requestUserData() {
+/* function requestUserData() {
 	return {type: 'REQUEST_USER_DATA'}
 };*/
 
 
-
 export function fetchUserData(dispatch) {
-	axios.get('api/account/getuserdata')
+  axios.get('api/account/getuserdata')
 		.then((response) => {
-			dispatch(receiveUserData(response.data));
-		})
+  dispatch(receiveUserData(response.data));
+})
 		.catch((error) => {
-			console.log(error);
-		});
+  console.log(error);
+});
 }
 
 export function fetchGroupData(dispatch, groupName) {
-	axios.post('api/group/getgroupdata', {
-		GroupName: groupName
-	})
+  axios.post('api/group/getgroupdata', {
+    GroupName: groupName
+  })
 	.then((response) => {
-		dispatch(receiveGroupData(response.data));
-	})
+  dispatch(receiveGroupData(response.data));
+})
 	.catch((error) => {
-		console.log(error);
-	})
+  console.log(error);
+});
 }
 
 export function fetchHomePageData() {
-	return dispatch => {
-		dispatch(requestHomePageData());
+  return (dispatch) => {
+    dispatch(requestHomePageData());
 
-		const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem('token');
 
-		return axios.get('api/account/homepagedata', {
-			headers: { Authorization: `JWT ${token}` }
-		})
-			.then(response => {
-				dispatch(receiveHomePageData(response.data))
-			})
+    return axios.get('api/account/homepagedata', {
+      headers: { Authorization: `JWT ${token}` }
+    })
+			.then((response) => {
+  dispatch(receiveHomePageData(response.data));
+})
 			.catch(error => console.log(error));
-	};
+  };
 }
 
 export function createDebtFormSubmit(groupName, usernameFrom,
 																		 amount, whatFor) {
-	return dispatch => {
-		dispatch(requestCreateDebtSubmit());
+  return (dispatch) => {
+    dispatch(requestCreateDebtSubmit());
 
-		return axios.post('api/debt/create', {
-			GroupName: groupName,
-			UsernameFrom: usernameFrom,
-			Amount: amount,
-			WhatFor: whatFor
-		})
-			.then(response => {
-				dispatch(receiveCreateDebtSubmit(response.data, groupName));
-			})
-			.catch(error => {
-				console.log(error);
-			});
-	}
+    return axios.post('api/debt/create', {
+      GroupName: groupName,
+      UsernameFrom: usernameFrom,
+      Amount: amount,
+      WhatFor: whatFor
+    })
+			.then((response) => {
+  dispatch(receiveCreateDebtSubmit(response.data, groupName));
+})
+			.catch((error) => {
+  console.log(error);
+});
+  };
 }
 
 export function addToGroupFormSubmit(groupName, userToAdd) {
-	return dispatch => {
-		dispatch(requestAddToGroupSubmit());
+  return (dispatch) => {
+    dispatch(requestAddToGroupSubmit());
 
-		const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem('token');
 
-		return axios.post('api/group/addtogroup', {
-			GroupName: groupName,
-			Username: userToAdd
-		}, {
-			headers: { Authorization: `JWT ${token}` }
-		})
-			.then(response => {
-				dispatch(receiveAddToGroupSubmit(response.data, groupName));
-			})
-			.catch(error => {
-				console.log(error);
-			});
-	}
+    return axios.post('api/group/addtogroup', {
+      GroupName: groupName,
+      Username: userToAdd
+    }, {
+      headers: { Authorization: `JWT ${token}` }
+    })
+			.then((response) => {
+  dispatch(receiveAddToGroupSubmit(response.data, groupName));
+})
+			.catch((error) => {
+  console.log(error);
+});
+  };
 }
 
-/*onSubmit() {
+/* onSubmit() {
 	axios.post('api/debt/create', {
 		GroupName: this.state.group,
 		UsernameFrom: this.state.user,
@@ -117,7 +116,7 @@ export function addToGroupFormSubmit(groupName, userToAdd) {
 
 
 // Error: Use custom middleware for async actions
-/*export function fetchUserData() {
+/* export function fetchUserData() {
 	return function(dispatch) {
 		return axios.get('api/account/getuserdata')
 					.then((response) => {

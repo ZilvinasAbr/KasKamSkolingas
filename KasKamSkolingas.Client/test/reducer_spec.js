@@ -1,10 +1,9 @@
-//import {List, Map, fromJS} from 'immutable';
-import {expect} from 'chai';
+// import {List, Map, fromJS} from 'immutable';
+import { expect } from 'chai';
 
 import { oldReducer as reducer } from '../src/reducers/oldReducer';
 
 describe('reducer', () => {
-
   it('sets initial state with SET_INITIAL_STATE', () => {
     const initialState = {};
     const action = {
@@ -16,7 +15,7 @@ describe('reducer', () => {
       currentPage: 'Landing'
     });
   });
-  
+
   it('handles LOGGED_IN', () => {
     const initialState = {
       isLoggedIn: false,
@@ -28,8 +27,8 @@ describe('reducer', () => {
     const nextState = reducer(initialState, action);
 
     expect(nextState).to.equal({
-        isLoggedIn: true,
-        currentPage: 'Landing'
+      isLoggedIn: true,
+      currentPage: 'Landing'
     });
   });
 
@@ -44,8 +43,8 @@ describe('reducer', () => {
     const nextState = reducer(initialState, action);
 
     expect(nextState).to.equal({
-        isLoggedIn: false,
-        currentPage: "Landing"
+      isLoggedIn: false,
+      currentPage: 'Landing'
     });
   });
 
@@ -227,5 +226,4 @@ describe('reducer', () => {
       currentGroup: 'Group1'
     });
   });
-
 });

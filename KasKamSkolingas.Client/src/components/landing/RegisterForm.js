@@ -1,5 +1,5 @@
 import React from 'react';
-import {reduxForm} from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { register } from '../../actions/landingActions';
 
 class RegisterForm extends React.Component {
@@ -10,13 +10,13 @@ class RegisterForm extends React.Component {
   }
 
   handleSubmit() {
-    const {fields: {username, password, confirm} } = this.props;
+    const { fields: { username, password, confirm } } = this.props;
 
     this.props.dispatch(register(username.value, password.value, confirm.value));
   }
 
   render() {
-    const {fields: {username, password, confirm} } = this.props;
+    const { fields: { username, password, confirm } } = this.props;
 
     return (
       <div>

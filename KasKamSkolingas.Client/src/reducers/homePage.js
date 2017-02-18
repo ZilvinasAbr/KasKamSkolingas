@@ -28,9 +28,9 @@ function requestHomePageData(state) {
 }
 
 function receiveHomePageData(state, json) {
-  let nextState = Object.assign({}, state, json);
+  const nextState = Object.assign({}, state, json);
 
-  nextState.groups.map(group => {
+  nextState.groups.map((group) => {
     group.debtIndex = 0;
     group.view = 'default';
   });
@@ -39,8 +39,7 @@ function receiveHomePageData(state, json) {
 }
 
 function changeGroupViewTo(state, groupIndex, view) {
-
-  let newState = Object.assign({}, {
+  const newState = Object.assign({}, {
     groups: state.groups
   });
 
@@ -54,46 +53,41 @@ function requestCreateDebtSubmit(state) {
 }
 
 function receiveCreateDebtSubmit(state, success, groupName) {
-  let newState = Object.assign({}, state);
+  const newState = Object.assign({}, state);
 
   console.log(newState.groups);
 
-  let group = newState.groups.filter((group) => group.name === groupName);
+  let group = newState.groups.filter(group => group.name === groupName);
   group = group[0];
 
-  if(success)
-    group.view = 'default';
-  else
-    group.view = 'createDebt';
+  if (success) { group.view = 'default'; } else { group.view = 'createDebt'; }
 
   return newState;
 }
 
 function viewNextDebt(state, groupIndex) {
-  let nextState = Object.assign({}, state);
-  let group = nextState.groups[groupIndex];
-  if(group.debtIndex === undefined || group.debtIndex === null) {
+  const nextState = Object.assign({}, state);
+  const group = nextState.groups[groupIndex];
+  if (group.debtIndex === undefined || group.debtIndex === null) {
     group.debtIndex = 0;
   }
 
   group.debtIndex++;
-  if(group.debtIndex === group.debts.length)
-    nextState.groups[groupIndex].debtIndex = 0;
-  
+  if (group.debtIndex === group.debts.length) { nextState.groups[groupIndex].debtIndex = 0; }
+
   return nextState;
 }
 
 function viewPreviousDebt(state, groupIndex) {
-  let nextState = Object.assign({}, state);
-  let group = nextState.groups[groupIndex];
-  if(group.debtIndex === undefined || group.debtIndex === null) {
+  const nextState = Object.assign({}, state);
+  const group = nextState.groups[groupIndex];
+  if (group.debtIndex === undefined || group.debtIndex === null) {
     group.debtIndex = 0;
   }
 
   group.debtIndex--;
 
-  if(group.debtIndex === -1)
-    nextState.groups[groupIndex].debtIndex = group.debts.length -1;
+  if (group.debtIndex === -1) { nextState.groups[groupIndex].debtIndex = group.debts.length - 1; }
 
   return nextState;
 }
@@ -103,15 +97,12 @@ function requestAddToGroupSubmit(state) {
 }
 
 function receiveAddToGroupSubmit(state, success, groupName) {
-  let newState = Object.assign({}, state);
+  const newState = Object.assign({}, state);
 
-  let group = newState.groups.filter((group) => group.name === groupName);
+  let group = newState.groups.filter(group => group.name === groupName);
   group = group[0];
 
-  if(success)
-    group.view = 'default';
-  else
-    group.view = 'addToGroup';
+  if (success) { group.view = 'default'; } else { group.view = 'addToGroup'; }
 
   return newState;
 }
@@ -119,7 +110,7 @@ function receiveAddToGroupSubmit(state, success, groupName) {
 function groupMainButtonPressed(state, groupIndex) {
   const view = state.groups[groupIndex].view;
 
-  let nextState = Object.assign({}, state);
+  const nextState = Object.assign({}, state);
 
   switch (view) {
     case 'default':
@@ -150,7 +141,7 @@ function logOff(state) {
 }
 
 function createGroup(state, groupName) {
-  let nextGroups = state.groups.slice();
+  const nextGroups = state.groups.slice();
   nextGroups.push({
     name: groupName,
     inDebt: 0,

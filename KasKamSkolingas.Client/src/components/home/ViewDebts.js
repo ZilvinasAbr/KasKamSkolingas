@@ -15,7 +15,7 @@ const ViewDebts = (props) => {
     <div>
       <span>
         <button onClick={viewPreviousDebt}>{'<-'}</button>
-        {props.debtIndex+1}/{props.debts.length}
+        {props.debtIndex + 1}/{props.debts.length}
         <button onClick={viewNextDebt}>{'->'}</button>
       </span>
       <span><div>User in debt: {debt.userInDebt}</div>

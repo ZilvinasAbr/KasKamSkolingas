@@ -1,9 +1,9 @@
-import {Map, fromJS} from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { combineReducers } from 'redux';
 import { homePage } from './homePage';
 import { oldReducer } from './oldReducer';
 import { landingPage } from './landingPage';
-import { reducer as formReducer} from 'redux-form';
+import { reducer as formReducer } from 'redux-form';
 import { routerReducer } from 'react-router-redux';
 
 const reducers = {
@@ -15,9 +15,9 @@ const reducers = {
 
 export default combineReducers(reducers);
 
-/*export default combineReducers({
+/* export default combineReducers({
   homePage,
   oldReducer
 });*/
 
-//export default homePage;
+// export default homePage;

@@ -12,16 +12,14 @@ const GroupTile = (props) => {
     // }
   };
 
-  const getButtonText = view => {
-    if(view === 'default')
-      return 'Settings';
-    else
-      return 'Back';
+  const getButtonText = (view) => {
+    if (view === 'default') { return 'Settings'; }
+    return 'Back';
   };
 
   return (
-    <div style={{borderStyle: 'solid', borderWidth: '1px', width: '256px', height: '128px'}}>
-      <div style={{borderStyle: 'solid', borderWidth: '1px'}}>
+    <div style={{ borderStyle: 'solid', borderWidth: '1px', width: '256px', height: '128px' }}>
+      <div style={{ borderStyle: 'solid', borderWidth: '1px' }}>
         {props.groupName}
         <button onClick={handleSettingsClick}>{getButtonText(props.view)}</button>
       </div>
@@ -59,7 +57,7 @@ GroupTile.propTypes = {
   changeViewToViewDebts: React.PropTypes.func.isRequired,
   changeViewToAddToGroup: React.PropTypes.func.isRequired,
   changeViewToLeaveGroup: React.PropTypes.func.isRequired,
-  viewNextDebt : React.PropTypes.func.isRequired,
+  viewNextDebt: React.PropTypes.func.isRequired,
   viewPreviousDebt: React.PropTypes.func.isRequired,
   group: React.PropTypes.object.isRequired,
   handleGroupMainButtonPress: React.PropTypes.func.isRequired

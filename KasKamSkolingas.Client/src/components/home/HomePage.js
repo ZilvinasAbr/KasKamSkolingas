@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchHomePageData } from '../../actions';
 import { isLoggedIn } from '../../actions/commonActions';
-import { 
+import {
   changeGroupViewToSettings,
   changeGroupViewToDefault,
   changeGroupViewToCreateDebt,
@@ -26,7 +26,7 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
   }
-  
+
   componentDidMount() {
     // When the component mounts, check if user is logged in.
     // If he is, load homepage data, otherwise redirect to landing page
@@ -60,7 +60,7 @@ class HomePage extends React.Component {
   render() {
     const homePage = this.props.state.homePage || {};
     const groups = homePage.groups;
-    
+
     return (
       <div>
         <button onClick={this.props.loadHomePageData}>Refresh</button>
@@ -77,8 +77,8 @@ class HomePage extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    state: state
-  }
+    state
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -86,31 +86,31 @@ function mapDispatchToProps(dispatch) {
     loadHomePageData: () => {
       dispatch(fetchHomePageData());
     },
-    changeViewToSettings: groupIndex => {
+    changeViewToSettings: (groupIndex) => {
       dispatch(changeGroupViewToSettings(groupIndex));
     },
-    changeViewToDefault: groupIndex => {
+    changeViewToDefault: (groupIndex) => {
       dispatch(changeGroupViewToDefault(groupIndex));
     },
-    changeViewToCreateDebt: groupIndex => {
+    changeViewToCreateDebt: (groupIndex) => {
       dispatch(changeGroupViewToCreateDebt(groupIndex));
     },
-    changeViewToViewDebts: groupIndex => {
+    changeViewToViewDebts: (groupIndex) => {
       dispatch(changeGroupViewToViewDebts(groupIndex));
     },
-    changeViewToAddToGroup: groupIndex => {
+    changeViewToAddToGroup: (groupIndex) => {
       dispatch(changeGroupViewToAddToGroup(groupIndex));
     },
-    changeViewToLeaveGroup: groupIndex => {
+    changeViewToLeaveGroup: (groupIndex) => {
       dispatch(changeGroupViewToLeaveGroup(groupIndex));
     },
-    viewNextDebt: groupIndex => {
+    viewNextDebt: (groupIndex) => {
       dispatch(viewNextDebt(groupIndex));
     },
-    viewPreviousDebt: groupIndex => {
+    viewPreviousDebt: (groupIndex) => {
       dispatch(viewPreviousDebt(groupIndex));
     },
-    handleGroupMainButtonPress: groupIndex => {
+    handleGroupMainButtonPress: (groupIndex) => {
       dispatch(groupMainButtonPressed(groupIndex));
     },
     logOff: () => {
@@ -122,7 +122,7 @@ function mapDispatchToProps(dispatch) {
     createGroup: (groupName) => {
       dispatch(createGroup(groupName));
     }
-  }
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

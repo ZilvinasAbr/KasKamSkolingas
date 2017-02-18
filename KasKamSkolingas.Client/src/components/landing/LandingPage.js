@@ -31,8 +31,8 @@ class LandingPage extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    state: state
-  }
+    state
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -40,7 +40,7 @@ function mapDispatchToProps(dispatch) {
     isLoggedIn: () => {
       dispatch(isLoggedIn());
     }
-  }
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

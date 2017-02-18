@@ -1,5 +1,5 @@
 import React from 'react';
-import {reduxForm} from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { addToGroupFormSubmit } from '../../actions';
 
 class AddToGroupForm extends React.Component {
@@ -10,14 +10,13 @@ class AddToGroupForm extends React.Component {
   }
 
   handleSubmit() {
-    const {groupName, fields: {user}, index} = this.props;
+    const { groupName, fields: { user }, index } = this.props;
 
     this.props.dispatch(addToGroupFormSubmit(groupName, user.value));
   }
 
   render() {
-
-    const {fields: {user}, index} = this.props;
+    const { fields: { user }, index } = this.props;
 
     return (
       <div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {reduxForm} from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { createDebtFormSubmit } from '../../actions';
 
 class CreateDebtForm extends React.Component {
@@ -10,14 +10,13 @@ class CreateDebtForm extends React.Component {
   }
 
   handleSubmit() {
-    const {groupName, fields: {user, amount, whatFor}, index} = this.props;
+    const { groupName, fields: { user, amount, whatFor }, index } = this.props;
 
     this.props.dispatch(createDebtFormSubmit(groupName, user.value, amount.value, whatFor.value));
   }
 
   render() {
-
-    const {fields: {user, amount, whatFor}, index} = this.props;
+    const { fields: { user, amount, whatFor }, index } = this.props;
 
     return (
       <div>

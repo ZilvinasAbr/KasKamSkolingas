@@ -17,9 +17,9 @@ injectTapEventPlugin();
 import './index.css';
 
 const initialState = {
-	landingPage: {},
-	homePage: {},
-	form: {}
+  landingPage: {},
+  homePage: {},
+  form: {}
 };
 
 const store = createStore(reducer, initialState, compose(
@@ -31,15 +31,15 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 render(
 	(
-		<MuiThemeProvider>
-			<Provider store={store}>
-				{ /* Tell the Router to use our enhanced history */}
-				<Router history={history}>
-					<Route path="/" component={LandingPage} />
-					<Route path="/home" component={HomePage} />
-				</Router>
-			</Provider>
-		</MuiThemeProvider>
+  <MuiThemeProvider>
+    <Provider store={store}>
+      { /* Tell the Router to use our enhanced history */}
+      <Router history={history}>
+        <Route path="/" component={LandingPage} />
+        <Route path="/home" component={HomePage} />
+      </Router>
+    </Provider>
+  </MuiThemeProvider>
 	),
 	document.getElementById('app')
 );

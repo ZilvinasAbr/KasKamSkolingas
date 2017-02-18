@@ -21,10 +21,10 @@ class CreateGroup extends React.Component {
         <div>CreateGroup</div>
         <input
           value={this.state.groupName}
-          type='text'
-          onChange={(e) => this.setState({ groupName: e.target.value })}
+          type="text"
+          onChange={e => this.setState({ groupName: e.target.value })}
         />
-        <button type='button' onClick={this.handleClick}>Create</button>
+        <button type="button" onClick={this.handleClick}>Create</button>
       </div>
     );
   }

@@ -7,7 +7,7 @@ import ViewDebts from './ViewDebts';
 
 const GroupTileWindow = (props) => {
   const renderView = (view, inDebt, debtTo) => {
-    switch(view){
+    switch (view) {
       case 'default':
         return (
           <Default
@@ -56,7 +56,7 @@ const GroupTileWindow = (props) => {
           </div>
         );
       default:
-        return <div>Error</div>
+        return <div>Error</div>;
     }
   };
 

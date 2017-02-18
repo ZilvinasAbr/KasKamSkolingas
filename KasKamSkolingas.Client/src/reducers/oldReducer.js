@@ -1,4 +1,4 @@
-//import {Map, fromJS} from 'immutable';
+// import {Map, fromJS} from 'immutable';
 
 export const initialState = {
   isLoggedIn: false,
@@ -11,21 +11,21 @@ function setInitialState() {
 
 function login(state) {
   return Object.assign({}, state, {
-    'isLoggedIn': true,
-    'currentPage': 'Landing'
+    isLoggedIn: true,
+    currentPage: 'Landing'
   });
 }
 
 function logoff(state) {
   return Object.assign({}, state, {
-    'isLoggedIn': false,
-    'currentPage': 'Landing'
+    isLoggedIn: false,
+    currentPage: 'Landing'
   });
 }
 
 function setCurrentPage(state, page) {
-  if(state.isLoggedIn === true) {
-    if(page === 'Login' || page === 'Register') {
+  if (state.isLoggedIn === true) {
+    if (page === 'Login' || page === 'Register') {
       return state;
     }
   }
@@ -54,7 +54,7 @@ function setCurrentGroup(state, group) {
 }
 
 export function oldReducer(state = initialState, action) {
-  switch(action.type) {
+  switch (action.type) {
     case 'SET_INITIAL_STATE':
       return setInitialState();
     case 'LOGGED_IN':

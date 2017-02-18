@@ -7,26 +7,26 @@ import {
 import { fetchHomePageData } from '../actions';
 
 export function isLoggedIn() {
-  return dispatch => {
+  return (dispatch) => {
     const token = window.localStorage.getItem('token');
 
     if (token) {
       axios.get('/api/account/isSignedIn', {
         headers: { Authorization: `JWT ${token}` }
       })
-      .then(response => {
+      .then((response) => {
         if (response.data === true) {
           dispatch(push('/home'));
           dispatch(fetchHomePageData());
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         dispatch(push('/'));
-      })
+      });
     } else {
       dispatch(push('/'));
     }
-  }
+  };
 }
 

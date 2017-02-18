@@ -1,5 +1,5 @@
 import React from 'react';
-import {reduxForm} from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { login } from '../../actions/landingActions';
 
 class LoginForm extends React.Component {
@@ -10,14 +10,13 @@ class LoginForm extends React.Component {
   }
 
   handleSubmit() {
-    const {fields: {username, password} } = this.props;
+    const { fields: { username, password } } = this.props;
 
     this.props.dispatch(login(username.value, password.value));
   }
 
   render() {
-
-    const {fields: {username, password} } = this.props;
+    const { fields: { username, password } } = this.props;
 
     return (
       <div>
