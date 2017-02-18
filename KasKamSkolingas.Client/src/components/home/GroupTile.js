@@ -1,6 +1,7 @@
 import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import GroupTileWindow from './GroupTileWindow';
-import { changeGroupViewToSettings } from '../../action_creators';
 
 const GroupTile = (props) => {
   const handleSettingsClick = () => {
@@ -18,10 +19,14 @@ const GroupTile = (props) => {
   };
 
   return (
-    <div style={{ borderStyle: 'solid', borderWidth: '1px', width: '256px', height: '128px' }}>
-      <div style={{ borderStyle: 'solid', borderWidth: '1px' }}>
+    <div>
+      <div>
         {props.groupName}
-        <button onClick={handleSettingsClick}>{getButtonText(props.view)}</button>
+        <RaisedButton
+          label={getButtonText(props.view)}
+          onClick={handleSettingsClick}
+          primary
+        />
       </div>
       <GroupTileWindow
         index={props.index}

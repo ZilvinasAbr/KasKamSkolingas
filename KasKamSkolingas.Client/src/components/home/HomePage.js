@@ -1,5 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { GridList, GridTile } from 'material-ui/GridList';
+import Subheader from 'material-ui/Subheader';
+import Paper from 'material-ui/Paper';
 
 import { fetchHomePageData } from '../../actions';
 import { isLoggedIn } from '../../actions/commonActions';
@@ -21,6 +24,18 @@ import {
 import GroupTile from './GroupTile';
 import CreateGroup from './CreateGroup';
 
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  gridList: {
+    width: 500,
+    height: 450,
+    overflowY: 'auto',
+  },
+};
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -35,26 +50,29 @@ class HomePage extends React.Component {
 
   renderGroupTiles(groups = []) {
     return groups.map((group, index) =>
-      <GroupTile
-        key={index}
-        index={index}
-        view={group.view}
-        debtIndex={group.debtIndex}
-        groupName={group.name}
-        inDebt={group.inDebt}
-        debtTo={group.debtTo}
-        debts={group.debts}
-        changeViewToSettings={this.props.changeViewToSettings}
-        changeViewToDefault={this.props.changeViewToDefault}
-        changeViewToCreateDebt={this.props.changeViewToCreateDebt}
-        changeViewToViewDebts={this.props.changeViewToViewDebts}
-        changeViewToAddToGroup={this.props.changeViewToAddToGroup}
-        changeViewToLeaveGroup={this.props.changeViewToLeaveGroup}
-        viewNextDebt={this.props.viewNextDebt}
-        viewPreviousDebt={this.props.viewPreviousDebt}
-        group={group}
-        handleGroupMainButtonPress={this.props.handleGroupMainButtonPress}
-      />);
+      <Paper key={index} zDepth={4}>
+        <GridTile>
+          <GroupTile
+            index={index}
+            view={group.view}
+            debtIndex={group.debtIndex}
+            groupName={group.name}
+            inDebt={group.inDebt}
+            debtTo={group.debtTo}
+            debts={group.debts}
+            changeViewToSettings={this.props.changeViewToSettings}
+            changeViewToDefault={this.props.changeViewToDefault}
+            changeViewToCreateDebt={this.props.changeViewToCreateDebt}
+            changeViewToViewDebts={this.props.changeViewToViewDebts}
+            changeViewToAddToGroup={this.props.changeViewToAddToGroup}
+            changeViewToLeaveGroup={this.props.changeViewToLeaveGroup}
+            viewNextDebt={this.props.viewNextDebt}
+            viewPreviousDebt={this.props.viewPreviousDebt}
+            group={group}
+            handleGroupMainButtonPress={this.props.handleGroupMainButtonPress}
+          />
+        </GridTile>
+      </Paper>);
   }
 
   render() {
@@ -66,10 +84,22 @@ class HomePage extends React.Component {
         <button onClick={this.props.loadHomePageData}>Refresh</button>
         Groups
         <button onClick={this.props.logOff}>Log off</button>
-        {this.renderGroupTiles(groups)}
-        <CreateGroup
-          createGroup={this.props.createGroup}
-        />
+        <div style={styles.root}>
+          <GridList
+            cellHeight={300}
+            cols={4}
+          >
+            <Subheader>Groups</Subheader>
+            {this.renderGroupTiles(groups)}
+            <Paper zDepth={4}>
+              <GridTile>
+                <CreateGroup
+                  createGroup={this.props.createGroup}
+                />
+              </GridTile>
+            </Paper>
+          </GridList>
+        </div>
       </div>
     );
   }

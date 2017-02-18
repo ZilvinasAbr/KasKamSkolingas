@@ -1,21 +1,34 @@
 import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const Settings = props => (
   <div>
     <div>
-      <button onClick={() => props.changeViewToCreateDebt(props.index)}>Create debt</button>
+      <RaisedButton
+        onTouchTap={() => props.changeViewToCreateDebt(props.index)}
+        label={'Create debt'}
+      />
     </div>
     <div>
-      <button onClick={() => props.changeViewToViewDebts(props.index)}>View debts</button>
+      <RaisedButton
+        onClick={() => props.changeViewToViewDebts(props.index)}
+        label={'View debts'}
+      />
     </div>
     <div>
-      <button onClick={() => props.changeViewToAddToGroup(props.index)}>Add to group</button>
+      <RaisedButton
+        onClick={() => props.changeViewToAddToGroup(props.index)}
+        label={'Add to group'}
+      />
     </div>
     <div>
-      <button onClick={() => props.changeViewToLeaveGroup(props.index)}>Leave group</button>
+      <RaisedButton
+        onClick={() => props.changeViewToLeaveGroup(props.index)}
+        label={'Leave group'}
+      />
     </div>
   </div>
-  );
+);
 
 Settings.propTypes = {
   index: React.PropTypes.number.isRequired,

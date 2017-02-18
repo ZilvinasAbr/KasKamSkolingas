@@ -1,4 +1,7 @@
 import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
 
 class CreateGroup extends React.Component {
   constructor(props) {
@@ -19,12 +22,16 @@ class CreateGroup extends React.Component {
     return (
       <div>
         <div>CreateGroup</div>
-        <input
+        <TextField
           value={this.state.groupName}
-          type="text"
+          hintText="Group name"
           onChange={e => this.setState({ groupName: e.target.value })}
         />
-        <button type="button" onClick={this.handleClick}>Create</button>
+        <FlatButton
+          label={'Create'}
+          onTouchTap={this.handleClick}
+          primary
+        />
       </div>
     );
   }

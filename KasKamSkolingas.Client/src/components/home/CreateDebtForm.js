@@ -1,5 +1,8 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
+import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
+
 import { createDebtFormSubmit } from '../../actions';
 
 class CreateDebtForm extends React.Component {
@@ -21,18 +24,31 @@ class CreateDebtForm extends React.Component {
     return (
       <div>
         <div>
-          <label>User</label>
-          <input type="text" placeholder="User" {...user} />
+          <TextField
+            hintText="User"
+            floatingLabelText="User"
+            {...user}
+          />
         </div>
         <div>
-          <label>Amount</label>
-          <input type="number" placeholder="Amount" {...amount} />
+          <TextField
+            hintText="Amount"
+            floatingLabelText="Amount"
+            {...amount}
+          />
         </div>
         <div>
-          <label>What for</label>
-          <input type="text" placeholder="What for" {...whatFor} />
+          <TextField
+            hintText="What for"
+            floatingLabelText="What for"
+            {...whatFor}
+          />
         </div>
-        <button onClick={this.handleSubmit}>Submit</button>
+        <FlatButton
+          label={'Submit'}
+          onTouchTap={this.handleSubmit}
+          primary
+        />
       </div>
     );
   }
