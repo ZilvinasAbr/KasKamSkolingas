@@ -5,7 +5,8 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "npm run test -- --watch",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",
@@ -14,9 +15,11 @@
     "babel-preset-react": "^6.5.0",
     "chai": "^3.5.0",
     "chai-immutable": "^1.6.0",
+    "css-loader": "^0.26.1",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "^9.2.1",
     "mocha": "^2.5.3",
+    "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.16.2"
   },
@@ -24,11 +27,13 @@
     "axios": "^0.12.0",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
+    "material-ui": "^0.17.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.7.0",
     "react-router-redux": "^4.0.5",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.5.2",
     "redux-form": "^5.3.2",
     "redux-immutable": "^3.0.8",
