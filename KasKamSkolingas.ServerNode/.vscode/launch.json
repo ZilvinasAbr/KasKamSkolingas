@@ -8,8 +8,6 @@
       "program": "${workspaceRoot}\\src\\index.js",
       "cwd": "${workspaceRoot}",
       "runtimeArgs": [
-        "--harmony",
-        "--no-deprecation"
       ]
     },
     {
